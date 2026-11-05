@@ -1,0 +1,88 @@
+.cursor {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.cursor.is-visible {
+  opacity: 1;
+}
+
+.cursor__dot,
+.cursor__ring {
+  position: fixed;
+  left: 0;
+  top: 0;
+  will-change: transform;
+}
+
+.cursor__dot {
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  border-radius: 50%;
+  background: var(--text);
+  mix-blend-mode: difference;
+}
+
+.cursor__ring {
+  width: 38px;
+  height: 38px;
+  margin: -19px 0 0 -19px;
+  display: grid;
+  place-items: center;
+}
+
+.cursor__ring::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(238, 243, 251, 0.55);
+  transition:
+    transform 0.5s var(--ease-out-expo),
+    background-color 0.4s ease,
+    border-color 0.4s ease;
+}
+
+.cursor.is-hovering .cursor__ring::before {
+  transform: scale(1.9);
+  border-color: transparent;
+  background: rgba(238, 243, 251, 0.14);
+  backdrop-filter: blur(2px);
+}
+
+.cursor.is-labelled .cursor__ring::before {
+  transform: scale(2.6);
+  border-color: transparent;
+  background: var(--yellow);
+}
+
+.cursor.is-pressed .cursor__ring::before {
+  transform: scale(0.75);
+}
+
+.cursor.is-labelled .cursor__dot {
+  opacity: 0;
+}
+
+.cursor__label {
+  position: relative;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--navy);
+  white-space: nowrap;
+  opacity: 0;
+  transform: scale(0.6);
+  transition:
+    opacity 0.3s ease,
+    transform 0.5s var(--ease-out-expo);
+}
+
+.cursor.is-labelled .cursor__label {
+  opacity: 1;
+  transform: scale(1);
+}

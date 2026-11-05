@@ -1,0 +1,170 @@
+.hero {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  align-items: end;
+  min-height: 100svh;
+  overflow: clip;
+}
+
+.hero__backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(90% 70% at 70% 30%, #0b3a8c 0%, var(--navy) 55%, var(--ink) 100%);
+}
+
+.hero__veil {
+  position: absolute;
+  inset: 0;
+  opacity: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(45% 40% at 96% 100%, rgba(253, 193, 7, 0.2), transparent 70%),
+    radial-gradient(38% 32% at 0% 100%, rgba(249, 5, 0, 0.12), transparent 70%),
+    linear-gradient(180deg, rgba(2, 10, 20, 0.35) 0%, transparent 30%, transparent 55%, rgba(2, 10, 20, 0.85) 100%);
+}
+
+.hero__vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 220px 40px rgba(2, 10, 20, 0.75);
+}
+
+.hero__shade {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background: var(--ink);
+  pointer-events: none;
+}
+
+.hero__logo-wrap {
+  position: absolute;
+  z-index: 1;
+  top: clamp(72px, 10vh, 120px);
+  right: clamp(0px, 9vw, 180px);
+  width: min(54vh, 38vw, 580px);
+  perspective: 1200px;
+  pointer-events: none;
+}
+
+.hero__halo {
+  position: absolute;
+  inset: 8%;
+  border-radius: 50%;
+  background:
+    radial-gradient(closest-side, rgba(61, 134, 255, 0.5), rgba(61, 134, 255, 0.12) 55%, transparent 75%),
+    radial-gradient(40% 40% at 70% 75%, rgba(253, 193, 7, 0.22), transparent 70%);
+  filter: blur(30px);
+}
+
+.hero__logo {
+  position: relative;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.hero__mark {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  filter: drop-shadow(0 40px 60px rgba(2, 10, 20, 0.55));
+}
+
+.hero__mark .brand-mark__bar--blue {
+  filter: drop-shadow(0 0 28px rgba(21, 91, 191, 0.65));
+}
+
+.hero__mark .brand-mark__bar--yellow {
+  filter: drop-shadow(0 0 24px rgba(253, 193, 7, 0.35));
+}
+
+.hero__mark .brand-mark__bar--red {
+  filter: drop-shadow(0 0 22px rgba(249, 5, 0, 0.35));
+}
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 380px);
+  grid-template-areas:
+    'eyebrow eyebrow'
+    'title aside';
+  align-items: end;
+  column-gap: clamp(24px, 4vw, 64px);
+  row-gap: 18px;
+  padding-bottom: clamp(92px, 14vh, 132px);
+}
+
+.hero__content > .eyebrow {
+  grid-area: eyebrow;
+}
+
+.hero__title {
+  grid-area: title;
+  font-size: clamp(4rem, 13.5vw, 15.5rem);
+  font-weight: 600;
+  line-height: 0.86;
+  letter-spacing: -0.065em;
+  margin-left: -0.04em;
+  text-wrap: balance;
+}
+
+.hero__accent {
+  display: inline-block;
+  padding-right: 0.08em;
+  background: linear-gradient(100deg, #ffffff 10%, #9cc2ff 45%, var(--yellow) 120%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero__title .split-line-mask .hero__accent {
+  background: none;
+  color: inherit;
+}
+
+.hero__aside {
+  grid-area: aside;
+  display: grid;
+  gap: 24px;
+  padding-bottom: 0.9em;
+}
+
+.hero__body {
+  color: var(--text-soft);
+  font-size: clamp(1rem, 1.2vw, 1.12rem);
+  max-width: 34ch;
+}
+
+.hero__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+@media (max-width: 900px) {
+  .hero__content {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'eyebrow'
+      'title'
+      'aside';
+  }
+
+  .hero__logo-wrap {
+    top: clamp(68px, 9svh, 110px);
+    left: 0;
+    right: 0;
+    margin-inline: auto;
+    width: min(72vw, 38svh);
+  }
+
+  .hero__aside {
+    padding-bottom: 0;
+  }
+}

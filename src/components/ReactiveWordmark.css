@@ -1,0 +1,68 @@
+@property --heat {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 0;
+}
+
+.wordmark {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  font-size: clamp(5rem, 24vw, 26rem);
+  padding-top: 0.12em;
+  user-select: none;
+}
+
+.wordmark__spot {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  width: 0.9em;
+  height: 0.9em;
+  margin: -0.45em 0 0 -0.45em;
+  border-radius: 50%;
+  background:
+    radial-gradient(closest-side, rgba(61, 134, 255, 0.55), rgba(21, 91, 191, 0.18) 55%, transparent 75%),
+    radial-gradient(30% 30% at 60% 60%, rgba(253, 193, 7, 0.35), transparent 70%);
+  filter: blur(20px);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+
+.wordmark.is-active .wordmark__spot {
+  opacity: 1;
+}
+
+.wordmark__text {
+  display: flex;
+  justify-content: center;
+  font-weight: 600;
+  line-height: 0.82;
+  letter-spacing: -0.07em;
+  white-space: nowrap;
+}
+
+.wordmark__mask {
+  display: inline-block;
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+  clip-path: inset(-1em -0.5em 0 -0.5em);
+}
+
+.wordmark__char {
+  --heat: 0;
+  display: inline-block;
+  color: color-mix(in oklab, var(--text) calc(var(--heat) * 100%), rgba(238, 243, 251, 0.04));
+  -webkit-text-stroke: 1px rgba(238, 243, 251, 0.22);
+  text-shadow: 0 0 calc(var(--heat) * 70px) rgba(61, 134, 255, calc(var(--heat) * 0.9));
+  transition: --heat 0.45s ease;
+  will-change: transform;
+}
+
+@media (hover: none) {
+  .wordmark__char {
+    color: rgba(238, 243, 251, 0.1);
+  }
+}

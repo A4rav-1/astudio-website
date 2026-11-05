@@ -1,0 +1,125 @@
+.magnetic {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 999px;
+  font-weight: 500;
+  white-space: nowrap;
+  will-change: transform;
+}
+
+.magnetic__label {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: color 0.5s var(--ease-out-expo);
+}
+
+.magnetic__fill {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  transform: translateY(101%);
+  transition: transform 0.6s var(--ease-out-expo);
+}
+
+.magnetic:hover .magnetic__fill,
+.magnetic:focus-visible .magnetic__fill {
+  transform: none;
+}
+
+.magnetic--solid {
+  padding: 16px 28px;
+  background: var(--text);
+  color: var(--navy);
+}
+
+.magnetic--solid .magnetic__fill {
+  background: var(--yellow);
+}
+
+.magnetic--ghost {
+  padding: 15px 26px;
+  border: 1px solid var(--line-strong);
+  color: var(--text);
+}
+
+.magnetic--ghost .magnetic__fill {
+  background: var(--text);
+}
+
+.magnetic--ghost:hover .magnetic__label,
+.magnetic--ghost:focus-visible .magnetic__label {
+  color: var(--navy);
+}
+
+.magnetic--giant {
+  width: clamp(200px, 26vw, 320px);
+  aspect-ratio: 1;
+  background: var(--yellow);
+  color: var(--navy);
+  font-size: clamp(1.2rem, 2vw, 1.7rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  animation: magnetic-pulse 2.4s ease-out infinite;
+}
+
+.magnetic--giant .magnetic__label {
+  flex-direction: column;
+  gap: 8px;
+  text-align: center;
+  line-height: 1.1;
+}
+
+.magnetic--giant .magnetic__label span {
+  display: grid;
+  place-items: center;
+  width: 1.9em;
+  height: 1.9em;
+  border-radius: 50%;
+  background: var(--navy);
+  color: var(--yellow);
+  font-size: 1.1em;
+  transition: transform 0.5s var(--ease-out-expo);
+}
+
+.magnetic--giant:hover .magnetic__label span,
+.magnetic--giant:focus-visible .magnetic__label span {
+  transform: translateX(6px) rotate(-45deg);
+}
+
+.magnetic--giant .magnetic__fill {
+  background: var(--text);
+  transform: translateY(130%) scale(1.2);
+  border-radius: 40%;
+}
+
+.magnetic--giant:hover .magnetic__fill,
+.magnetic--giant:focus-visible .magnetic__fill {
+  transform: scale(1.2);
+}
+
+@keyframes magnetic-pulse {
+  0% {
+    box-shadow:
+      0 30px 90px -10px rgba(253, 193, 7, 0.55),
+      0 0 0 0 rgba(253, 193, 7, 0.6);
+  }
+  100% {
+    box-shadow:
+      0 30px 90px -10px rgba(253, 193, 7, 0.55),
+      0 0 0 46px rgba(253, 193, 7, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .magnetic--giant {
+    animation: none;
+    box-shadow: 0 30px 90px -10px rgba(253, 193, 7, 0.55);
+  }
+}
