@@ -26,7 +26,6 @@ export interface CompanyCopy {
   tagline: string
   body: string
   linkLabel: string
-  markHighlight: 'red' | 'yellow' | 'blue'
 }
 
 export interface GradientColors {
@@ -163,7 +162,6 @@ export const COMPANIES: readonly CompanyCopy[] = [
     tagline: 'Modular folding drones.',
     body: 'Fold-out locking arms, a solid stowage body and swappable modules. One airframe for many jobs.',
     linkLabel: 'Enter',
-    markHighlight: 'blue',
   },
   {
     id: 'web',
@@ -173,7 +171,6 @@ export const COMPANIES: readonly CompanyCopy[] = [
     tagline: 'Websites for companies.',
     body: "From a consulting firm's site to a nut and snack store with its own admin portal and stock management.",
     linkLabel: 'Enter',
-    markHighlight: 'yellow',
   },
   {
     id: 'exam',
@@ -183,7 +180,6 @@ export const COMPANIES: readonly CompanyCopy[] = [
     tagline: 'The VCE Exam Trainer.',
     body: 'A study app for Victorian VCE students: exam-style practice, worked feedback and subject packs checked against official exam specifications.',
     linkLabel: 'Enter',
-    markHighlight: 'red',
   },
 ]
 

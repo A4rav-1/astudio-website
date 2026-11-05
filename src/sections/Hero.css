@@ -86,6 +86,10 @@
   filter: drop-shadow(0 0 22px rgba(249, 5, 0, 0.35));
 }
 
+.hero__mark--company .brand-mark__bar {
+  filter: drop-shadow(0 0 26px rgba(var(--accent-rgb), 0.5));
+}
+
 .hero__content {
   position: relative;
   z-index: 2;

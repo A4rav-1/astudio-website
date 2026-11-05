@@ -1,8 +1,9 @@
 import { useEffect, useRef, type MouseEvent } from 'react'
-import { NAV_CTA, NAV_LINKS } from '../content'
+import { COMPANIES, NAV_CTA, NAV_LINKS } from '../content'
 import { routeHash } from '../lib/route'
 import { useRouter } from '../providers/routerContext'
 import { useSmoothScroll } from '../providers/smoothScrollContext'
+import { CompanyMark } from './CompanyMark'
 import { GlassPanel } from './GlassPanel'
 import './Nav.css'
 
@@ -13,6 +14,7 @@ export function Nav() {
   const navRef = useRef<HTMLElement>(null)
   const scroll = useSmoothScroll()
   const { route, navigate } = useRouter()
+  const company = COMPANIES.find((entry) => entry.id === route)
 
   useEffect(
     () =>
@@ -42,9 +44,13 @@ export function Nav() {
   return (
     <header ref={navRef} className="nav">
       <GlassPanel className="nav__panel" radius={999} bezel={14} refraction={30} blurPx={6}>
-        <a href={routeHash('hub')} className="nav__brand" onClick={onBrandClick} aria-label="A Studio, home">
-          <img src={`${import.meta.env.BASE_URL}mark.png`} alt="" width={28} height={28} />
-          <span>A Studio</span>
+        <a href={routeHash('hub')} className={`nav__brand${company ? ' nav__brand--company' : ''}`} onClick={onBrandClick} aria-label="A Studio, home">
+          {company ? (
+            <CompanyMark company={company.id} className="nav__brand-mark" />
+          ) : (
+            <img src={`${import.meta.env.BASE_URL}mark.png`} alt="" width={28} height={28} />
+          )}
+          <span>{company ? company.name : 'A Studio'}</span>
         </a>
         <nav aria-label="Companies">
           <ul className="nav__links">

@@ -3,6 +3,7 @@ import { flushSync } from 'react-dom'
 import { RouteCurtain } from '../components/RouteCurtain'
 import { PAGE_META } from '../content'
 import { usePrefersReducedMotion } from '../hooks/useMediaQuery'
+import { faviconForRoute } from '../lib/companyMarks'
 import { gsap, ScrollTrigger } from '../lib/gsap'
 import { parseRoute, routeHash, type RouteId } from '../lib/route'
 import { RouterContext, type RouterApi } from './routerContext'
@@ -22,6 +23,11 @@ export function RouterProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     document.title = PAGE_META[route].documentTitle
+    const icon = document.querySelector<HTMLLinkElement>("link[rel='icon']")
+    if (!icon) throw new Error('index.html is missing its favicon link')
+    const favicon = faviconForRoute(route, import.meta.env.BASE_URL)
+    icon.type = favicon.type
+    icon.href = favicon.href
   }, [route])
 
   useEffect(() => {

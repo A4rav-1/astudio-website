@@ -1,8 +1,9 @@
 import { lazy, Suspense, useRef, type MouseEvent } from 'react'
 import { BrandMark } from '../components/BrandMark'
+import { CompanyMark } from '../components/CompanyMark'
 import { MagneticButton } from '../components/MagneticButton'
 import { ScrollHint } from '../components/ScrollHint'
-import { COMPANIES, CONTACT_EMAIL, PAGE_META } from '../content'
+import { CONTACT_EMAIL, PAGE_META } from '../content'
 import { useInView } from '../hooks/useInView'
 import { usePrefersReducedMotion } from '../hooks/useMediaQuery'
 import { useRenderQuality } from '../hooks/useRenderQuality'
@@ -24,7 +25,6 @@ interface HeroProps {
 
 export function Hero({ route }: HeroProps) {
   const { hero, gradient, mailSubject } = PAGE_META[route]
-  const highlight = COMPANIES.find((company) => company.id === route)?.markHighlight
   const sectionRef = useRef<HTMLElement>(null)
   const logoRef = useRef<HTMLDivElement>(null)
   const introComplete = useIntroComplete()
@@ -131,7 +131,11 @@ export function Hero({ route }: HeroProps) {
       <div className="hero__logo-wrap" aria-hidden="true">
         <div className="hero__halo" />
         <div ref={logoRef} className="hero__logo">
-          <BrandMark className="hero__mark" highlight={highlight} />
+          {route === 'hub' ? (
+            <BrandMark className="hero__mark" />
+          ) : (
+            <CompanyMark company={route} className="hero__mark hero__mark--company" />
+          )}
         </div>
       </div>
 

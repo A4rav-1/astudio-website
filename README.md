@@ -20,6 +20,7 @@ npm test         # vitest run
 - `src/pages/` — one page per route. Routes are `#/`, `#/drone`, `#/web`, `#/exam` (`lib/route.ts`); other hashes such as `#contact` are in-page anchors.
 - Each company page sets `data-company` on `.site`, which swaps the accent colour variables (`--accent`, `--accent-rgb`) in `styles/global.css`: blue drones, yellow web, red exam.
 - `src/sections/` — Hero (takes a route), IntroStatement, Companies (chooser and cross-links), DroneSequence, Principles, Work, Footer.
+- `public/marks/` and `src/lib/companyMarks.ts` — the sub-brand logos, drawn with the A Studio mark's stroke at the same scale. `CompanyMark` draws them in the company's accent, and each company page also uses its logo as the favicon.
 - `src/components/` — Loader, Cursor, Nav, RouteCurtain, ScrollProgress, Marquee, MagneticButton, GlassPanel (SVG displacement glass), SitePreview (live iframe), ReactiveWordmark, RevealHeading.
 - `src/scenes/drone/` — procedural drone: `buildDrone` (pure three.js scene graph), `applyDroneState` (writes a sampled state onto it), `DroneRig` (per-frame director: smoothing, camera orbit, callout projection), `Atmosphere`, `SceneEnvironment`.
 - `src/lib/` — pure helpers with Vitest tests: `droneTimeline` (scroll progress → arm/prop/module/camera state), keyframes, easing, math, pointer maths, render quality tiers, seeded random, glass displacement map.

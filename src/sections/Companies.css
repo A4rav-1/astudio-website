@@ -59,20 +59,17 @@
 
 .company-card__mark {
   position: absolute;
-  right: -8%;
-  bottom: -6%;
+  top: clamp(18px, 2vw, 30px);
+  right: clamp(18px, 2vw, 30px);
   z-index: -1;
-  width: 62%;
+  width: clamp(92px, 9vw, 132px);
   height: auto;
-  overflow: visible;
-  opacity: 0.9;
-  transform: rotate(-4deg);
   transition: transform 1.1s var(--ease-out-expo);
 }
 
 .company-card:hover .company-card__mark,
 .company-card:focus-visible .company-card__mark {
-  transform: rotate(3deg) scale(1.08) translate(-2%, -3%);
+  transform: scale(1.1);
 }
 
 .company-card__index {
@@ -139,9 +136,5 @@
   .company-card {
     flex: none;
     min-height: 340px;
-  }
-
-  .company-card__mark {
-    width: 52%;
   }
 }

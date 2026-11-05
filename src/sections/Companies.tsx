@@ -1,5 +1,5 @@
 import { useRef, type PointerEvent } from 'react'
-import { BrandMark } from '../components/BrandMark'
+import { CompanyMark } from '../components/CompanyMark'
 import { RevealHeading } from '../components/RevealHeading'
 import { COMPANIES, COMPANIES_SECTION, OTHER_COMPANIES_SECTION } from '../content'
 import { usePrefersReducedMotion } from '../hooks/useMediaQuery'
@@ -58,7 +58,7 @@ export function Companies({ excludeCompany }: CompaniesProps) {
               onPointerMove={onPointerMove}
             >
               <span className="company-card__glow" aria-hidden="true" />
-              <BrandMark className="company-card__mark" highlight={company.markHighlight} />
+              <CompanyMark company={company.id} className="company-card__mark" />
               <span className="company-card__index" aria-hidden="true">
                 {company.index}
               </span>
