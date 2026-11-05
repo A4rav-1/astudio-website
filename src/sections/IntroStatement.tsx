@@ -34,7 +34,7 @@ export function IntroStatement() {
   )
 
   return (
-    <section ref={sectionRef} className="intro container" aria-label="About A Studio">
+    <section ref={sectionRef} className="intro container" id="about" aria-label="About A Studio">
       <p className="eyebrow">Who we are</p>
       <p ref={textRef} className="intro__text">
         {INTRO_STATEMENT}

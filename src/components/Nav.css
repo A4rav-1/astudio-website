@@ -91,7 +91,15 @@
 }
 
 .nav__cta:hover {
-  background: var(--yellow);
+  background: var(--accent, var(--yellow));
+}
+
+.nav__link[aria-current='page'] {
+  color: var(--text);
+}
+
+.nav__link[aria-current='page'] .nav__link-text {
+  box-shadow: 0 2px 0 -0px var(--accent, var(--yellow));
 }
 
 @media (max-width: 720px) {

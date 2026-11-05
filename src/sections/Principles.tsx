@@ -1,10 +1,16 @@
 import { useRef } from 'react'
-import { PRINCIPLES, PRINCIPLES_SECTION } from '../content'
+import type { PrincipleCopy, SectionCopy } from '../content'
 import { usePrefersReducedMotion } from '../hooks/useMediaQuery'
 import { gsap, useGSAP } from '../lib/gsap'
 import './Principles.css'
 
-export function Principles() {
+interface PrinciplesProps {
+  id?: string
+  section: SectionCopy
+  items: readonly PrincipleCopy[]
+}
+
+export function Principles({ id, section, items }: PrinciplesProps) {
   const sectionRef = useRef<HTMLElement>(null)
   const reducedMotion = usePrefersReducedMotion()
 
@@ -24,16 +30,16 @@ export function Principles() {
   )
 
   return (
-    <section ref={sectionRef} className="principles" aria-labelledby="principles-title">
+    <section ref={sectionRef} id={id} className="principles" aria-labelledby={`${id ?? 'principles'}-title`}>
       <div className="container">
         <header className="principles__header">
-          <p className="eyebrow">{PRINCIPLES_SECTION.eyebrow}</p>
-          <h2 id="principles-title" className="principles__title">
-            {PRINCIPLES_SECTION.title}
+          <p className="eyebrow">{section.eyebrow}</p>
+          <h2 id={`${id ?? 'principles'}-title`} className="principles__title">
+            {section.title}
           </h2>
         </header>
         <div className="principles__grid">
-          {PRINCIPLES.map((principle) => (
+          {items.map((principle) => (
             <article key={principle.index} className="principle">
               <span className="principle__index" aria-hidden="true">
                 {principle.index}

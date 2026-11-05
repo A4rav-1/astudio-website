@@ -1,0 +1,16 @@
+.route-curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.route-curtain__bar {
+  display: block;
+  height: 100%;
+  transform: scaleY(0);
+  will-change: transform;
+}

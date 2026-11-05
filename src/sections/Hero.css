@@ -11,7 +11,7 @@
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: radial-gradient(90% 70% at 70% 30%, #0b3a8c 0%, var(--navy) 55%, var(--ink) 100%);
+  background: radial-gradient(90% 70% at 70% 30%, var(--hero-glow, #0b3a8c) 0%, var(--navy) 55%, var(--ink) 100%);
 }
 
 .hero__veil {
@@ -20,8 +20,8 @@
   opacity: 1;
   pointer-events: none;
   background:
-    radial-gradient(45% 40% at 96% 100%, rgba(253, 193, 7, 0.2), transparent 70%),
-    radial-gradient(38% 32% at 0% 100%, rgba(249, 5, 0, 0.12), transparent 70%),
+    radial-gradient(45% 40% at 96% 100%, rgba(var(--accent-rgb, 253, 193, 7), 0.2), transparent 70%),
+    radial-gradient(38% 32% at 0% 100%, rgba(var(--accent-rgb, 249, 5, 0), 0.12), transparent 70%),
     linear-gradient(180deg, rgba(2, 10, 20, 0.35) 0%, transparent 30%, transparent 55%, rgba(2, 10, 20, 0.85) 100%);
 }
 
@@ -55,8 +55,8 @@
   inset: 8%;
   border-radius: 50%;
   background:
-    radial-gradient(closest-side, rgba(61, 134, 255, 0.5), rgba(61, 134, 255, 0.12) 55%, transparent 75%),
-    radial-gradient(40% 40% at 70% 75%, rgba(253, 193, 7, 0.22), transparent 70%);
+    radial-gradient(closest-side, rgba(var(--accent-rgb, 61, 134, 255), 0.5), rgba(var(--accent-rgb, 61, 134, 255), 0.12) 55%, transparent 75%),
+    radial-gradient(40% 40% at 70% 75%, rgba(var(--accent-rgb, 253, 193, 7), 0.22), transparent 70%);
   filter: blur(30px);
 }
 
@@ -114,10 +114,14 @@
   text-wrap: balance;
 }
 
+.hero__title--long {
+  font-size: clamp(3.4rem, 9.6vw, 11.5rem);
+}
+
 .hero__accent {
   display: inline-block;
   padding-right: 0.08em;
-  background: linear-gradient(100deg, #ffffff 10%, #9cc2ff 45%, var(--yellow) 120%);
+  background: linear-gradient(100deg, #ffffff 10%, var(--hero-accent-mid, #9cc2ff) 45%, var(--accent, var(--yellow)) 120%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;

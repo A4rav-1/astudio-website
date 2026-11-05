@@ -86,6 +86,14 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
         }
         document.querySelector(target)?.scrollIntoView()
       },
+      jumpToTop() {
+        const lenis = lenisRef.current
+        if (lenis) {
+          lenis.scrollTo(0, { immediate: true, force: true })
+          return
+        }
+        window.scrollTo({ top: 0 })
+      },
       lock() {
         document.documentElement.classList.add(LOCK_CLASS)
         lenisRef.current?.stop()

@@ -27,6 +27,30 @@
   color-scheme: dark;
 }
 
+[data-company='drone'] {
+  --accent: #3d86ff;
+  --accent-rgb: 61, 134, 255;
+  --accent-ink: #031428;
+  --hero-glow: #0b3a8c;
+  --hero-accent-mid: #9cc2ff;
+}
+
+[data-company='web'] {
+  --accent: #fdc107;
+  --accent-rgb: 253, 193, 7;
+  --accent-ink: #031428;
+  --hero-glow: #6b4a00;
+  --hero-accent-mid: #ffe28a;
+}
+
+[data-company='exam'] {
+  --accent: #ff4540;
+  --accent-rgb: 255, 69, 64;
+  --accent-ink: #ffffff;
+  --hero-glow: #7a0a07;
+  --hero-accent-mid: #ffb1ad;
+}
+
 *,
 *::before,
 *::after {

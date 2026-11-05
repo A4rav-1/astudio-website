@@ -1,3 +1,5 @@
+import type { CompanyRouteId, RouteId } from './lib/route'
+
 export interface NavLink {
   label: string
   href: string
@@ -16,14 +18,47 @@ export interface CalloutCopy {
 
 export type CalloutAnchorId = 'body' | 'hinge' | 'motor' | 'moduleBay' | 'moduleSwap' | 'airframe'
 
-export interface ServiceCopy {
-  id: 'drones' | 'websites' | 'trainer'
+export interface CompanyCopy {
+  id: CompanyRouteId
   index: string
-  title: string
+  name: string
+  shortName: string
+  tagline: string
   body: string
   linkLabel: string
-  href: string
-  accent: string
+  markHighlight: 'red' | 'yellow' | 'blue'
+}
+
+export interface GradientColors {
+  color1: string
+  color2: string
+  color3: string
+}
+
+export interface PageHeroCopy {
+  eyebrow: string
+  headlineLead: string
+  headlineAccent: string
+  body: string
+  primaryCta: string
+  primaryHref: string
+  secondaryCta: string
+  scrollCue: string
+  longTitle: boolean
+}
+
+export interface SectionCopy {
+  eyebrow: string
+  title: string
+}
+
+export interface PageMeta {
+  documentTitle: string
+  hero: PageHeroCopy
+  gradient: GradientColors
+  footerBody: string
+  footerCta: string
+  mailSubject: string
 }
 
 export interface PrincipleCopy {
@@ -54,33 +89,24 @@ export const BRAND_COLORS = {
 } as const
 
 export const NAV_LINKS: readonly NavLink[] = [
-  { label: 'Drones', href: '#drone' },
-  { label: 'Services', href: '#services' },
-  { label: 'Work', href: '#work' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Drones', href: '#/drone' },
+  { label: 'Web', href: '#/web' },
+  { label: 'Exam', href: '#/exam' },
 ]
 
-export const HERO = {
-  eyebrow: `A Studio · ${LOCATION}`,
-  headlineLead: 'Built to',
-  headlineAccent: 'unfold.',
-  body: 'Modular folding drones, websites for companies and the VCE Exam Trainer. Designed and built in Melbourne.',
-  primaryCta: 'Watch it unfold',
-  secondaryCta: 'Start a project',
-  scrollCue: 'Scroll to explore',
-} as const
+export const NAV_CTA = { label: 'Start a project', href: '#contact' } as const
 
 export const SCROLL_HINTS = {
   drone: { start: 'Scroll to unfold the drone', active: 'Keep scrolling' },
 } as const
 
 export const INTRO_STATEMENT =
-  'A Studio is a Melbourne studio building three things: modular folding drones that pack down into a solid body, websites for companies, and a study app that trains VCE students the way the exam will test them.'
+  'A Studio is a Melbourne studio and the parent of three companies. A Drone Company builds modular folding drones. A Web Company builds websites for companies. A Exam Company trains VCE students the way the exam will test them.'
 
 export const MARQUEE_PRIMARY: readonly string[] = [
-  'Modular folding drones',
-  'Websites for companies',
-  'VCE Exam Trainer',
+  'A Drone Company',
+  'A Web Company',
+  'A Exam Company',
   'Made in Melbourne',
 ]
 
@@ -123,45 +149,53 @@ export const DRONE_CALLOUTS: readonly CalloutCopy[] = [
   { id: 'airframe', label: 'One airframe', step: 4 },
 ]
 
-export const SERVICES_SECTION = {
-  eyebrow: 'What we make',
-  title: 'Three things, made properly.',
-} as const
+export const COMPANIES_SECTION: SectionCopy = {
+  eyebrow: 'The companies',
+  title: 'Pick a company.',
+}
 
-export const SERVICES: readonly ServiceCopy[] = [
+export const COMPANIES: readonly CompanyCopy[] = [
   {
-    id: 'drones',
+    id: 'drone',
     index: '01',
-    title: 'Modular folding drones',
+    name: 'A Drone Company',
+    shortName: 'Drones',
+    tagline: 'Modular folding drones.',
     body: 'Fold-out locking arms, a solid stowage body and swappable modules. One airframe for many jobs.',
-    linkLabel: 'See the airframe',
-    href: '#drone',
-    accent: BRAND_COLORS.blue,
+    linkLabel: 'Enter',
+    markHighlight: 'blue',
   },
   {
-    id: 'websites',
+    id: 'web',
     index: '02',
-    title: 'Websites for companies',
+    name: 'A Web Company',
+    shortName: 'Web',
+    tagline: 'Websites for companies.',
     body: "From a consulting firm's site to a nut and snack store with its own admin portal and stock management.",
-    linkLabel: 'See the work',
-    href: '#work',
-    accent: BRAND_COLORS.yellow,
+    linkLabel: 'Enter',
+    markHighlight: 'yellow',
   },
   {
-    id: 'trainer',
+    id: 'exam',
     index: '03',
-    title: 'VCE Exam Trainer',
+    name: 'A Exam Company',
+    shortName: 'Exam',
+    tagline: 'The VCE Exam Trainer.',
     body: 'A study app for Victorian VCE students: exam-style practice, worked feedback and subject packs checked against official exam specifications.',
-    linkLabel: 'Ask about it',
-    href: CONTACT_HREF,
-    accent: BRAND_COLORS.red,
+    linkLabel: 'Enter',
+    markHighlight: 'red',
   },
 ]
 
-export const PRINCIPLES_SECTION = {
+export const OTHER_COMPANIES_SECTION: SectionCopy = {
+  eyebrow: 'Also from A Studio',
+  title: 'The other companies.',
+}
+
+export const PRINCIPLES_SECTION: SectionCopy = {
   eyebrow: 'How we think',
   title: 'Principles',
-} as const
+}
 
 export const PRINCIPLES: readonly PrincipleCopy[] = [
   {
@@ -217,10 +251,138 @@ export const WORK: readonly WorkCopy[] = [
   },
 ]
 
+export const DRONE_PRINCIPLES: readonly PrincipleCopy[] = [
+  PRINCIPLES[0],
+  PRINCIPLES[1],
+  { ...PRINCIPLES[4], index: '03' },
+]
+
+export const WEB_FEATURES_SECTION: SectionCopy = {
+  eyebrow: 'What we build',
+  title: 'Sites, stores, back offices.',
+}
+
+export const WEB_FEATURES: readonly PrincipleCopy[] = [
+  {
+    index: '01',
+    title: 'Company websites.',
+    body: 'A clear front door for a consulting firm, live for VKD Consultants.',
+  },
+  {
+    index: '02',
+    title: 'E-commerce.',
+    body: 'An online store for nuts and snacks, live for Krunchee Nutty Galore.',
+  },
+  {
+    index: '03',
+    title: 'Admin and stock.',
+    body: 'An admin portal and stock management behind the store.',
+  },
+]
+
+export const EXAM_STEPS_SECTION: SectionCopy = {
+  eyebrow: 'How it works',
+  title: 'Practise, learn, check.',
+}
+
+export const EXAM_STEPS: readonly PrincipleCopy[] = [
+  {
+    index: '01',
+    title: 'Practise.',
+    body: 'Exam-style questions, so the real paper is not the first time you see the format.',
+  },
+  {
+    index: '02',
+    title: 'Get feedback.',
+    body: 'Worked feedback on each answer, not just a mark.',
+  },
+  {
+    index: '03',
+    title: 'Check against the spec.',
+    body: 'Subject packs are checked against official VCE exam specifications.',
+  },
+]
+
+const SHARED_SCROLL_CUE = 'Scroll to explore'
+
+export const PAGE_META: Readonly<Record<RouteId, PageMeta>> = {
+  hub: {
+    documentTitle: 'A Studio',
+    hero: {
+      eyebrow: `A Studio · ${LOCATION}`,
+      headlineLead: 'Three',
+      headlineAccent: 'companies.',
+      body: 'One studio in Melbourne: modular folding drones, websites for companies and the VCE Exam Trainer.',
+      primaryCta: 'Meet the companies',
+      primaryHref: '#companies',
+      secondaryCta: 'Start a project',
+      scrollCue: SHARED_SCROLL_CUE,
+      longTitle: true,
+    },
+    gradient: { color1: '#155BBF', color2: '#0A2F73', color3: '#020A14' },
+    footerBody: 'Drones, websites or study tools. Tell us what you need.',
+    footerCta: 'Start a project',
+    mailSubject: 'A Studio enquiry',
+  },
+  drone: {
+    documentTitle: 'A Drone Company · A Studio',
+    hero: {
+      eyebrow: 'A Studio · A Drone Company',
+      headlineLead: 'Built to',
+      headlineAccent: 'unfold.',
+      body: 'Modular folding drones: fold-out locking arms, a solid stowage body and swappable modules. One airframe for many jobs.',
+      primaryCta: 'Watch it unfold',
+      primaryHref: '#drone',
+      secondaryCta: 'Get in touch',
+      scrollCue: SHARED_SCROLL_CUE,
+      longTitle: false,
+    },
+    gradient: { color1: '#155BBF', color2: '#0A2F73', color3: '#020A14' },
+    footerBody: 'Interested in the airframe? Say hello.',
+    footerCta: 'Get in touch',
+    mailSubject: 'A Drone Company enquiry',
+  },
+  web: {
+    documentTitle: 'A Web Company · A Studio',
+    hero: {
+      eyebrow: 'A Studio · A Web Company',
+      headlineLead: 'Sites that',
+      headlineAccent: 'work.',
+      body: "Websites for companies. From a consulting firm's front door to a full store with admin and stock behind it.",
+      primaryCta: 'See the work',
+      primaryHref: '#work',
+      secondaryCta: 'Start a site',
+      scrollCue: SHARED_SCROLL_CUE,
+      longTitle: true,
+    },
+    gradient: { color1: '#C99A06', color2: '#5C4303', color3: '#140E02' },
+    footerBody: 'Need a website for your company? Tell us about it.',
+    footerCta: 'Start a site',
+    mailSubject: 'A Web Company enquiry',
+  },
+  exam: {
+    documentTitle: 'A Exam Company · A Studio',
+    hero: {
+      eyebrow: 'A Studio · A Exam Company',
+      headlineLead: 'Ready for',
+      headlineAccent: 'the exam.',
+      body: 'The VCE Exam Trainer: exam-style practice, worked feedback and subject packs checked against official exam specifications.',
+      primaryCta: 'How it works',
+      primaryHref: '#how',
+      secondaryCta: 'Ask about it',
+      scrollCue: SHARED_SCROLL_CUE,
+      longTitle: true,
+    },
+    gradient: { color1: '#C41410', color2: '#5E0A08', color3: '#150404' },
+    footerBody: 'Questions about the VCE Exam Trainer? Ask away.',
+    footerCta: 'Ask us',
+    mailSubject: 'A Exam Company enquiry',
+  },
+}
+
 export const FOOTER = {
   title: 'Have something worth building?',
-  body: 'Drones, websites or study tools. Tell us what you need.',
-  cta: 'Start a project',
   backToTop: 'Back to top',
   wordmark: 'A Studio',
+  companiesLabel: 'Companies',
 } as const

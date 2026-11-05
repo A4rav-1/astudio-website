@@ -2,12 +2,14 @@ import { lazy, Suspense, useRef, type MouseEvent } from 'react'
 import { BrandMark } from '../components/BrandMark'
 import { MagneticButton } from '../components/MagneticButton'
 import { ScrollHint } from '../components/ScrollHint'
-import { CONTACT_HREF, HERO } from '../content'
+import { COMPANIES, CONTACT_EMAIL, PAGE_META } from '../content'
 import { useInView } from '../hooks/useInView'
 import { usePrefersReducedMotion } from '../hooks/useMediaQuery'
 import { useRenderQuality } from '../hooks/useRenderQuality'
 import { gsap, SplitText, useGSAP } from '../lib/gsap'
+import { buildMailto } from '../lib/contact'
 import { normalisedPointer } from '../lib/pointer'
+import type { RouteId } from '../lib/route'
 import { useIntroComplete } from '../providers/introContext'
 import { useSmoothScroll } from '../providers/smoothScrollContext'
 import './Hero.css'
@@ -16,7 +18,13 @@ const GradientBackground = lazy(() =>
   import('../components/GradientBackground').then((module) => ({ default: module.GradientBackground })),
 )
 
-export function Hero() {
+interface HeroProps {
+  route: RouteId
+}
+
+export function Hero({ route }: HeroProps) {
+  const { hero, gradient, mailSubject } = PAGE_META[route]
+  const highlight = COMPANIES.find((company) => company.id === route)?.markHighlight
   const sectionRef = useRef<HTMLElement>(null)
   const logoRef = useRef<HTMLDivElement>(null)
   const introComplete = useIntroComplete()
@@ -104,7 +112,7 @@ export function Hero() {
 
   const onWatch = (event: MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault()
-    scroll.scrollTo('#drone')
+    scroll.scrollTo(hero.primaryHref)
   }
 
   return (
@@ -112,7 +120,7 @@ export function Hero() {
       <div className="hero__backdrop" aria-hidden="true">
         {inView && (
           <Suspense fallback={null}>
-            <GradientBackground pixelDensity={quality.gradientPixelDensity} />
+            <GradientBackground pixelDensity={quality.gradientPixelDensity} colors={gradient} />
           </Suspense>
         )}
         <div className="hero__veil" />
@@ -123,24 +131,24 @@ export function Hero() {
       <div className="hero__logo-wrap" aria-hidden="true">
         <div className="hero__halo" />
         <div ref={logoRef} className="hero__logo">
-          <BrandMark className="hero__mark" />
+          <BrandMark className="hero__mark" highlight={highlight} />
         </div>
       </div>
 
       <div className="hero__content container">
-        <p className="eyebrow hero__reveal">{HERO.eyebrow}</p>
-        <h1 id="hero-title" className="hero__title">
-          {HERO.headlineLead} <span className="serif-accent hero__accent">{HERO.headlineAccent}</span>
+        <p className="eyebrow hero__reveal">{hero.eyebrow}</p>
+        <h1 id="hero-title" className={`hero__title${hero.longTitle ? ' hero__title--long' : ''}`}>
+          {hero.headlineLead} <span className="serif-accent hero__accent">{hero.headlineAccent}</span>
         </h1>
         <div className="hero__aside">
-          <p className="hero__body hero__reveal">{HERO.body}</p>
+          <p className="hero__body hero__reveal">{hero.body}</p>
           <div className="hero__ctas hero__reveal">
-            <MagneticButton href="#drone" onClick={onWatch}>
-              {HERO.primaryCta}
+            <MagneticButton href={hero.primaryHref} onClick={onWatch}>
+              {hero.primaryCta}
               <span aria-hidden="true">↓</span>
             </MagneticButton>
-            <MagneticButton href={CONTACT_HREF} variant="ghost">
-              {HERO.secondaryCta}
+            <MagneticButton href={buildMailto(CONTACT_EMAIL, mailSubject)} variant="ghost">
+              {hero.secondaryCta}
             </MagneticButton>
           </div>
         </div>
@@ -149,8 +157,8 @@ export function Hero() {
       <ScrollHint
         className="hero__reveal hero__scroll-hint"
         phase="start"
-        startLabel={HERO.scrollCue}
-        activeLabel={HERO.scrollCue}
+        startLabel={hero.scrollCue}
+        activeLabel={hero.scrollCue}
       />
     </section>
   )

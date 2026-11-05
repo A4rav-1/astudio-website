@@ -1,20 +1,44 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useState, type ComponentType } from 'react'
 import { Cursor } from './components/Cursor'
 import { Loader } from './components/Loader'
 import { Marquee } from './components/Marquee'
 import { Nav } from './components/Nav'
 import { ScrollProgress } from './components/ScrollProgress'
-import { MARQUEE_CLOSING, MARQUEE_PRIMARY } from './content'
+import { MARQUEE_CLOSING } from './content'
 import { ScrollTrigger } from './lib/gsap'
+import type { RouteId } from './lib/route'
+import { DronePage } from './pages/DronePage'
+import { ExamPage } from './pages/ExamPage'
+import { HubPage } from './pages/HubPage'
+import { WebPage } from './pages/WebPage'
 import { IntroContext } from './providers/introContext'
+import { RouterProvider } from './providers/RouterProvider'
+import { useRouter } from './providers/routerContext'
 import { SmoothScrollProvider } from './providers/SmoothScrollProvider'
-import { DroneSequence } from './sections/DroneSequence'
 import { Footer } from './sections/Footer'
-import { Hero } from './sections/Hero'
-import { IntroStatement } from './sections/IntroStatement'
-import { Principles } from './sections/Principles'
-import { Services } from './sections/Services'
-import { Work } from './sections/Work'
+
+const PAGES: Readonly<Record<RouteId, ComponentType>> = {
+  hub: HubPage,
+  drone: DronePage,
+  web: WebPage,
+  exam: ExamPage,
+}
+
+function Site() {
+  const { route } = useRouter()
+  const Page = PAGES[route]
+
+  return (
+    <div className="site" data-company={route === 'hub' ? undefined : route}>
+      <Nav />
+      <main id="main" key={route}>
+        <Page />
+        <Marquee items={MARQUEE_CLOSING} variant="outline" reverse secondsPerLoop={30} label="Get in touch" />
+      </main>
+      <Footer />
+    </div>
+  )
+}
 
 export default function App() {
   const [introComplete, setIntroComplete] = useState(false)
@@ -28,26 +52,17 @@ export default function App() {
 
   return (
     <SmoothScrollProvider>
-      <IntroContext.Provider value={introComplete}>
-        <a className="skip-link" href="#main">
-          Skip to content
-        </a>
-        {loaderMounted && <Loader onReveal={onReveal} onDone={onLoaderDone} />}
-        <Cursor />
-        <ScrollProgress />
-        <Nav />
-        <main id="main">
-          <Hero />
-          <Marquee items={MARQUEE_PRIMARY} label="What A Studio makes" />
-          <IntroStatement />
-          <DroneSequence />
-          <Services />
-          <Principles />
-          <Work />
-          <Marquee items={MARQUEE_CLOSING} variant="outline" reverse secondsPerLoop={30} label="Get in touch" />
-        </main>
-        <Footer />
-      </IntroContext.Provider>
+      <RouterProvider>
+        <IntroContext.Provider value={introComplete}>
+          <a className="skip-link" href="#main">
+            Skip to content
+          </a>
+          {loaderMounted && <Loader onReveal={onReveal} onDone={onLoaderDone} />}
+          <Cursor />
+          <ScrollProgress />
+          <Site />
+        </IntroContext.Provider>
+      </RouterProvider>
     </SmoothScrollProvider>
   )
 }

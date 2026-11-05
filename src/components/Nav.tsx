@@ -1,5 +1,7 @@
 import { useEffect, useRef, type MouseEvent } from 'react'
-import { NAV_LINKS } from '../content'
+import { NAV_CTA, NAV_LINKS } from '../content'
+import { routeHash } from '../lib/route'
+import { useRouter } from '../providers/routerContext'
 import { useSmoothScroll } from '../providers/smoothScrollContext'
 import { GlassPanel } from './GlassPanel'
 import './Nav.css'
@@ -10,6 +12,7 @@ const SOLID_AFTER_PX = 40
 export function Nav() {
   const navRef = useRef<HTMLElement>(null)
   const scroll = useSmoothScroll()
+  const { route, navigate } = useRouter()
 
   useEffect(
     () =>
@@ -30,18 +33,24 @@ export function Nav() {
     scroll.scrollTo(href)
   }
 
+  const onBrandClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    if (route !== 'hub') return
+    event.preventDefault()
+    navigate('hub')
+  }
+
   return (
     <header ref={navRef} className="nav">
       <GlassPanel className="nav__panel" radius={999} bezel={14} refraction={30} blurPx={6}>
-        <a href="#top" className="nav__brand" onClick={onAnchorClick} aria-label="A Studio, back to top">
+        <a href={routeHash('hub')} className="nav__brand" onClick={onBrandClick} aria-label="A Studio, home">
           <img src={`${import.meta.env.BASE_URL}mark.png`} alt="" width={28} height={28} />
           <span>A Studio</span>
         </a>
-        <nav aria-label="Primary">
+        <nav aria-label="Companies">
           <ul className="nav__links">
             {NAV_LINKS.map((link) => (
               <li key={link.href}>
-                <a href={link.href} onClick={onAnchorClick} className="nav__link">
+                <a href={link.href} className="nav__link" aria-current={link.href === routeHash(route) ? 'page' : undefined}>
                   <span className="nav__link-text" data-text={link.label}>
                     {link.label}
                   </span>
@@ -50,8 +59,8 @@ export function Nav() {
             ))}
           </ul>
         </nav>
-        <a href="#contact" className="nav__cta" onClick={onAnchorClick}>
-          Start a project
+        <a href={NAV_CTA.href} className="nav__cta" onClick={onAnchorClick}>
+          {NAV_CTA.label}
         </a>
       </GlassPanel>
     </header>

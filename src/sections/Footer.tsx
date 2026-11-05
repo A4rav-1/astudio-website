@@ -1,7 +1,10 @@
 import { MagneticButton } from '../components/MagneticButton'
 import { ReactiveWordmark } from '../components/ReactiveWordmark'
 import { RevealHeading } from '../components/RevealHeading'
-import { CONTACT_EMAIL, CONTACT_HREF, FOOTER, LOCATION, NAV_LINKS, WORK } from '../content'
+import { COMPANIES, CONTACT_EMAIL, FOOTER, LOCATION, PAGE_META } from '../content'
+import { buildMailto } from '../lib/contact'
+import { routeHash } from '../lib/route'
+import { useRouter } from '../providers/routerContext'
 import { useSmoothScroll } from '../providers/smoothScrollContext'
 import './Footer.css'
 
@@ -15,7 +18,10 @@ function splitLastWord(sentence: string): { lead: string; last: string } {
 
 export function Footer() {
   const scroll = useSmoothScroll()
+  const { route } = useRouter()
+  const meta = PAGE_META[route]
   const title = splitLastWord(FOOTER.title)
+  const mailto = buildMailto(CONTACT_EMAIL, meta.mailSubject)
 
   return (
     <footer id="contact" className="footer" aria-labelledby="contact-title">
@@ -26,13 +32,13 @@ export function Footer() {
             <RevealHeading id="contact-title">
               {title.lead} <em>{title.last}</em>
             </RevealHeading>
-            <p className="footer__body">{FOOTER.body}</p>
-            <a className="footer__email" href={CONTACT_HREF}>
+            <p className="footer__body">{meta.footerBody}</p>
+            <a className="footer__email" href={mailto}>
               {CONTACT_EMAIL}
             </a>
           </div>
-          <MagneticButton href={CONTACT_HREF} variant="giant" strength={0.4}>
-            {FOOTER.cta}
+          <MagneticButton href={mailto} variant="giant" strength={0.4}>
+            {meta.footerCta}
             <span aria-hidden="true">→</span>
           </MagneticButton>
         </div>
@@ -44,22 +50,10 @@ export function Footer() {
         <p>
           © {CURRENT_YEAR} A Studio · {LOCATION}
         </p>
-        <nav aria-label="Footer" className="footer__links">
-          {NAV_LINKS.slice(0, 3).map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={(event) => {
-                event.preventDefault()
-                scroll.scrollTo(link.href)
-              }}
-            >
-              {link.label}
-            </a>
-          ))}
-          {WORK.map((project) => (
-            <a key={project.id} href={project.url} target="_blank" rel="noopener noreferrer">
-              {project.name}
+        <nav aria-label={FOOTER.companiesLabel} className="footer__links">
+          {COMPANIES.map((company) => (
+            <a key={company.id} href={routeHash(company.id)}>
+              {company.name}
             </a>
           ))}
         </nav>

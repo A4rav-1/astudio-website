@@ -13,6 +13,7 @@ export type ScrollListener = (snapshot: ScrollSnapshot) => void
 export interface SmoothScrollApi {
   subscribe: (listener: ScrollListener) => () => void
   scrollTo: (target: string | number) => void
+  jumpToTop: () => void
   lock: () => void
   unlock: () => void
 }

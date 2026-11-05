@@ -1,6 +1,6 @@
 # A Studio — Cinematic Dark
 
-Scroll-driven marketing site for A Studio (modular folding drones, websites for companies, VCE Exam Trainer).
+Scroll-driven site for A Studio and its three sub-brands: A Drone Company (modular folding drones), A Web Company (websites for companies) and A Exam Company (VCE Exam Trainer).
 React 19 + TypeScript + Vite, GSAP (ScrollTrigger, SplitText), Lenis, three@0.169 + react-three-fiber, @shadergradient/react.
 
 ## Run
@@ -16,9 +16,11 @@ npm test         # vitest run
 ## Structure
 
 - `src/content.ts` — all copy, links and brand colours.
-- `src/App.tsx` — section order; `providers/` holds Lenis smooth scroll (synced to the GSAP ticker) and the intro flag the loader flips.
-- `src/sections/` — Hero, IntroStatement, DroneSequence, Services, Principles, Work, Footer.
-- `src/components/` — Loader, Cursor, Nav, ScrollProgress, Marquee, MagneticButton, TiltCard + GlassPanel (SVG displacement glass), SitePreview (live iframe), ReactiveWordmark, RevealHeading.
+- `src/App.tsx` — page map (`hub`, `drone`, `web`, `exam`); `providers/` holds Lenis smooth scroll (synced to the GSAP ticker), the hash router with its brand-bar curtain transition, and the intro flag the loader flips.
+- `src/pages/` — one page per route. Routes are `#/`, `#/drone`, `#/web`, `#/exam` (`lib/route.ts`); other hashes such as `#contact` are in-page anchors.
+- Each company page sets `data-company` on `.site`, which swaps the accent colour variables (`--accent`, `--accent-rgb`) in `styles/global.css`: blue drones, yellow web, red exam.
+- `src/sections/` — Hero (takes a route), IntroStatement, Companies (chooser and cross-links), DroneSequence, Principles, Work, Footer.
+- `src/components/` — Loader, Cursor, Nav, RouteCurtain, ScrollProgress, Marquee, MagneticButton, GlassPanel (SVG displacement glass), SitePreview (live iframe), ReactiveWordmark, RevealHeading.
 - `src/scenes/drone/` — procedural drone: `buildDrone` (pure three.js scene graph), `applyDroneState` (writes a sampled state onto it), `DroneRig` (per-frame director: smoothing, camera orbit, callout projection), `Atmosphere`, `SceneEnvironment`.
 - `src/lib/` — pure helpers with Vitest tests: `droneTimeline` (scroll progress → arm/prop/module/camera state), keyframes, easing, math, pointer maths, render quality tiers, seeded random, glass displacement map.
 

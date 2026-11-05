@@ -1,10 +1,13 @@
 import { ShaderGradient, ShaderGradientCanvas } from '@shadergradient/react'
 
+import type { GradientColors } from '../content'
+
 interface GradientBackgroundProps {
   pixelDensity: number
+  colors: GradientColors
 }
 
-export function GradientBackground({ pixelDensity }: GradientBackgroundProps) {
+export function GradientBackground({ pixelDensity, colors }: GradientBackgroundProps) {
   return (
     <ShaderGradientCanvas
       pixelDensity={pixelDensity}
@@ -22,9 +25,9 @@ export function GradientBackground({ pixelDensity }: GradientBackgroundProps) {
         uDensity={1.2}
         uFrequency={5.5}
         uAmplitude={0}
-        color1="#155BBF"
-        color2="#0A2F73"
-        color3="#020A14"
+        color1={colors.color1}
+        color2={colors.color2}
+        color3={colors.color3}
         reflection={0.12}
         lightType="3d"
         brightness={1.15}

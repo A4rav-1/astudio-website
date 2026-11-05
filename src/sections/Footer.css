@@ -3,7 +3,7 @@
   overflow: clip;
   padding-top: var(--section-space);
   background:
-    radial-gradient(70% 60% at 50% 100%, rgba(21, 91, 191, 0.3), transparent 70%),
+    radial-gradient(70% 60% at 50% 100%, rgba(var(--accent-rgb, 21, 91, 191), 0.3), transparent 70%),
     var(--ink);
 }
 
@@ -43,7 +43,7 @@
 }
 
 .footer__email:hover {
-  border-color: var(--yellow);
+  border-color: var(--accent, var(--yellow));
 }
 
 .footer__bottom {
