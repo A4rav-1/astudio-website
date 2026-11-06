@@ -1,0 +1,115 @@
+.start {
+  display: grid;
+  gap: clamp(32px, 5vw, 64px);
+  min-height: 100svh;
+  padding-top: clamp(120px, 16vh, 180px);
+  padding-bottom: var(--section-space);
+  align-content: start;
+}
+
+.start__header {
+  display: grid;
+  gap: 14px;
+}
+
+.start__choices {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(12px, 1.6vw, 24px);
+}
+
+.start-choice {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto auto auto 1fr auto;
+  gap: 10px;
+  min-height: clamp(320px, 42vh, 420px);
+  padding: clamp(22px, 2.4vw, 36px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(90% 80% at 100% 0%, rgba(var(--accent-rgb), 0.18), transparent 62%),
+    rgba(255, 255, 255, 0.02);
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color 0.5s ease,
+    transform 0.8s var(--ease-out-expo);
+}
+
+button.start-choice,
+a.start-choice {
+  appearance: none;
+}
+
+button.start-choice:hover,
+a.start-choice:hover,
+.start-choice:focus-visible {
+  border-color: rgba(var(--accent-rgb), 0.7);
+  transform: translateY(-4px);
+}
+
+.start-choice:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.start-choice--soon {
+  cursor: default;
+  opacity: 0.72;
+}
+
+.start-choice__mark {
+  width: clamp(64px, 6vw, 88px);
+  height: auto;
+  margin-bottom: 14px;
+}
+
+.start-choice__name {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--accent);
+}
+
+.start-choice__title {
+  font-size: clamp(1.6rem, 2.6vw, 2.4rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+
+.start-choice__body {
+  color: var(--text-soft);
+  max-width: 34ch;
+}
+
+.start-choice__action {
+  display: inline-flex;
+  gap: 10px;
+  justify-self: start;
+  margin-top: 18px;
+  padding: 11px 20px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.start-choice__action--soon {
+  border: 1px solid var(--line-strong);
+  background: transparent;
+  color: var(--text-soft);
+}
+
+@media (max-width: 900px) {
+  .start__choices {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .start-choice {
+    min-height: 0;
+  }
+}

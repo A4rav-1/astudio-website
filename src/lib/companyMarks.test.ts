@@ -14,8 +14,9 @@ describe('companyMarkSrc', () => {
 })
 
 describe('faviconForRoute', () => {
-  it('uses the A Studio mark on the hub', () => {
+  it('uses the A Studio mark on the hub and the start page', () => {
     expect(faviconForRoute('hub', '/astudio-website/')).toEqual({ href: '/astudio-website/mark.png', type: 'image/png' })
+    expect(faviconForRoute('start', '/')).toEqual({ href: '/mark.png', type: 'image/png' })
   })
 
   it('uses the company icon on a company page', () => {

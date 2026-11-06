@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { flushSync } from 'react-dom'
 import { RouteCurtain } from '../components/RouteCurtain'
-import { PAGE_META } from '../content'
+import { siteMetaFor } from '../content'
 import { usePrefersReducedMotion } from '../hooks/useMediaQuery'
 import { faviconForRoute } from '../lib/companyMarks'
 import { gsap, ScrollTrigger } from '../lib/gsap'
@@ -22,7 +22,7 @@ export function RouterProvider({ children }: { children: ReactNode }) {
   const curtainRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    document.title = PAGE_META[route].documentTitle
+    document.title = siteMetaFor(route).documentTitle
     const icon = document.querySelector<HTMLLinkElement>("link[rel='icon']")
     if (!icon) throw new Error('index.html is missing its favicon link')
     const favicon = faviconForRoute(route, import.meta.env.BASE_URL)

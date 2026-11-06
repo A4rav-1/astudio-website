@@ -1,7 +1,7 @@
 import { MagneticButton } from '../components/MagneticButton'
 import { ReactiveWordmark } from '../components/ReactiveWordmark'
 import { RevealHeading } from '../components/RevealHeading'
-import { COMPANIES, CONTACT_EMAIL, FOOTER, LOCATION, PAGE_META } from '../content'
+import { COMPANIES, CONTACT_EMAIL, FOOTER, LOCATION, siteMetaFor } from '../content'
 import { buildMailto } from '../lib/contact'
 import { routeHash } from '../lib/route'
 import { useRouter } from '../providers/routerContext'
@@ -19,7 +19,7 @@ function splitLastWord(sentence: string): { lead: string; last: string } {
 export function Footer() {
   const scroll = useSmoothScroll()
   const { route } = useRouter()
-  const meta = PAGE_META[route]
+  const meta = siteMetaFor(route)
   const title = splitLastWord(FOOTER.title)
   const mailto = buildMailto(CONTACT_EMAIL, meta.mailSubject)
 
@@ -37,10 +37,12 @@ export function Footer() {
               {CONTACT_EMAIL}
             </a>
           </div>
-          <MagneticButton href={mailto} variant="giant" strength={0.4}>
-            {meta.footerCta}
-            <span aria-hidden="true">→</span>
-          </MagneticButton>
+          {route !== 'start' && (
+            <MagneticButton href={routeHash('start')} variant="giant" strength={0.4}>
+              {meta.footerCta}
+              <span aria-hidden="true">→</span>
+            </MagneticButton>
+          )}
         </div>
       </div>
 

@@ -1,4 +1,4 @@
-import type { CompanyRouteId, RouteId } from './lib/route'
+import { routeHash, type CompanyRouteId, type HeroRouteId, type RouteId } from './lib/route'
 
 export interface NavLink {
   label: string
@@ -52,13 +52,16 @@ export interface SectionCopy {
   title: string
 }
 
-export interface PageMeta {
+export interface SiteMeta {
   documentTitle: string
-  hero: PageHeroCopy
-  gradient: GradientColors
   footerBody: string
   footerCta: string
   mailSubject: string
+}
+
+export interface PageMeta extends SiteMeta {
+  hero: PageHeroCopy
+  gradient: GradientColors
 }
 
 export interface PrincipleCopy {
@@ -78,7 +81,6 @@ export interface WorkCopy {
 }
 
 export const CONTACT_EMAIL = 'hello@astudio.example'
-export const CONTACT_HREF = `mailto:${CONTACT_EMAIL}`
 export const LOCATION = 'Melbourne, Australia'
 
 export const BRAND_COLORS = {
@@ -94,7 +96,7 @@ export const NAV_LINKS: readonly NavLink[] = [
   { label: 'Exam', href: '#/exam' },
 ]
 
-export const NAV_CTA = { label: 'Start a project', href: '#contact' } as const
+export const NAV_CTA = { label: 'Start a project', href: routeHash('start') } as const
 
 export const SCROLL_HINTS = {
   drone: { start: 'Scroll to unfold the drone', active: 'Keep scrolling' },
@@ -103,7 +105,7 @@ export const SCROLL_HINTS = {
 /** A run of statement text. `brand` marks a brand name, shown with its logo and colour. */
 export interface StatementSegment {
   text: string
-  brand: RouteId | null
+  brand: HeroRouteId | null
 }
 
 export const INTRO_STATEMENT: readonly StatementSegment[] = [
@@ -316,7 +318,7 @@ export const EXAM_STEPS: readonly PrincipleCopy[] = [
 
 const SHARED_SCROLL_CUE = 'Scroll to explore'
 
-export const PAGE_META: Readonly<Record<RouteId, PageMeta>> = {
+export const PAGE_META: Readonly<Record<HeroRouteId, PageMeta>> = {
   hub: {
     documentTitle: 'A Studio',
     hero: {
@@ -380,16 +382,76 @@ export const PAGE_META: Readonly<Record<RouteId, PageMeta>> = {
       body: 'The VCE Exam Trainer: exam-style practice, worked feedback and subject packs checked against official exam specifications.',
       primaryCta: 'How it works',
       primaryHref: '#how',
-      secondaryCta: 'Ask about it',
+      secondaryCta: 'Get started',
       scrollCue: SHARED_SCROLL_CUE,
       longTitle: true,
     },
     gradient: { color1: '#C41410', color2: '#5E0A08', color3: '#150404' },
     footerBody: 'Questions about the VCE Exam Trainer? Ask away.',
-    footerCta: 'Ask us',
+    footerCta: 'Get started',
     mailSubject: 'A Exam Company enquiry',
   },
 }
+
+const START_META: SiteMeta = {
+  documentTitle: 'Start a project · A Studio',
+  footerBody: 'Drones, websites or study tools. Pick one above to get going.',
+  footerCta: 'Start a project',
+  mailSubject: 'A Studio enquiry',
+}
+
+export function siteMetaFor(route: RouteId): SiteMeta {
+  return route === 'start' ? START_META : PAGE_META[route]
+}
+
+export const EXAM_TRAINER_URL = 'https://crispness-persecute-untimed.ngrok-free.dev'
+
+export interface StartChoiceCopy {
+  company: CompanyRouteId
+  name: string
+  title: string
+  body: string
+  action: string
+}
+
+export const START_PAGE = {
+  eyebrow: 'Start a project',
+  title: 'What can we help with?',
+  choices: [
+    {
+      company: 'web',
+      name: 'A Web Company',
+      title: 'Get a website',
+      body: 'A site for your company, from a clean front door to a full store with admin and stock.',
+      action: 'Start an enquiry',
+    },
+    {
+      company: 'drone',
+      name: 'A Drone Company',
+      title: 'Buy a drone',
+      body: 'The modular folding drone is on its way. Sales open soon.',
+      action: 'Coming soon',
+    },
+    {
+      company: 'exam',
+      name: 'A Exam Company',
+      title: 'Use the Exam Trainer',
+      body: 'Exam-style VCE practice with worked feedback, ready to use now.',
+      action: 'Open the Trainer',
+    },
+  ] satisfies readonly StartChoiceCopy[],
+  form: {
+    eyebrow: 'A Web Company',
+    title: 'Tell us about your site.',
+    back: 'Back to options',
+    submit: 'Send enquiry',
+    sending: 'Sending…',
+    successTitle: 'Thanks, we’ve got it.',
+    successBody: 'We’ll read your enquiry and get back to you by email.',
+    successAgain: 'Send another',
+    failure: 'That didn’t send. Check your connection and try again.',
+  },
+} as const
 
 export const FOOTER = {
   title: 'Have something worth building?',

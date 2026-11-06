@@ -1,12 +1,19 @@
 export const COMPANY_ROUTE_IDS = ['drone', 'web', 'exam'] as const
 export type CompanyRouteId = (typeof COMPANY_ROUTE_IDS)[number]
-export type RouteId = 'hub' | CompanyRouteId
+/** Routes that open with the full-screen hero. */
+export type HeroRouteId = 'hub' | CompanyRouteId
+export type RouteId = HeroRouteId | 'start'
 
 const ROUTE_PATHS: Readonly<Record<RouteId, string>> = {
   hub: '/',
   drone: '/drone',
   web: '/web',
   exam: '/exam',
+  start: '/start',
+}
+
+export function isCompanyRoute(route: RouteId): route is CompanyRouteId {
+  return (COMPANY_ROUTE_IDS as readonly string[]).includes(route)
 }
 
 const ROUTE_BY_PATH: ReadonlyMap<string, RouteId> = new Map(

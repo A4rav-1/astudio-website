@@ -1,4 +1,4 @@
-import type { CompanyRouteId, RouteId } from './route'
+import { isCompanyRoute, type CompanyRouteId, type RouteId } from './route'
 
 /** The glossy sub-brand logo, cut from the design sheet onto a shared square canvas so all three keep one scale. */
 export function companyMarkSrc(company: CompanyRouteId, baseUrl: string): string {
@@ -11,6 +11,6 @@ export interface Favicon {
 }
 
 export function faviconForRoute(route: RouteId, baseUrl: string): Favicon {
-  if (route === 'hub') return { href: `${baseUrl}mark.png`, type: 'image/png' }
+  if (!isCompanyRoute(route)) return { href: `${baseUrl}mark.png`, type: 'image/png' }
   return { href: `${baseUrl}marks/${route}-icon.png`, type: 'image/png' }
 }

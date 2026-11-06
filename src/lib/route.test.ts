@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { parseRoute, routeHash, type RouteId } from './route'
+import { isCompanyRoute, parseRoute, routeHash, type RouteId } from './route'
 
 describe('parseRoute', () => {
   it('treats an empty hash, # and #/ as the hub', () => {
@@ -31,7 +31,16 @@ describe('parseRoute', () => {
 
 describe('routeHash', () => {
   it('round-trips through parseRoute for every route', () => {
-    const routes: RouteId[] = ['hub', 'drone', 'web', 'exam']
+    const routes: RouteId[] = ['hub', 'drone', 'web', 'exam', 'start']
     for (const route of routes) expect(parseRoute(routeHash(route), 'hub')).toBe(route)
+  })
+})
+
+describe('isCompanyRoute', () => {
+  it('is true only for the company pages', () => {
+    expect(isCompanyRoute('drone')).toBe(true)
+    expect(isCompanyRoute('exam')).toBe(true)
+    expect(isCompanyRoute('hub')).toBe(false)
+    expect(isCompanyRoute('start')).toBe(false)
   })
 })

@@ -28,13 +28,6 @@ export function Nav() {
     [scroll],
   )
 
-  const onAnchorClick = (event: MouseEvent<HTMLAnchorElement>) => {
-    const href = event.currentTarget.getAttribute('href')
-    if (!href?.startsWith('#')) return
-    event.preventDefault()
-    scroll.scrollTo(href)
-  }
-
   const onBrandClick = (event: MouseEvent<HTMLAnchorElement>) => {
     if (route !== 'hub') return
     event.preventDefault()
@@ -65,7 +58,7 @@ export function Nav() {
             ))}
           </ul>
         </nav>
-        <a href={NAV_CTA.href} className="nav__cta" onClick={onAnchorClick}>
+        <a href={NAV_CTA.href} className="nav__cta" aria-current={route === 'start' ? 'page' : undefined}>
           {NAV_CTA.label}
         </a>
       </GlassPanel>

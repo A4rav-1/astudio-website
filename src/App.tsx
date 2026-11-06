@@ -6,10 +6,11 @@ import { Nav } from './components/Nav'
 import { ScrollProgress } from './components/ScrollProgress'
 import { MARQUEE_CLOSING } from './content'
 import { ScrollTrigger } from './lib/gsap'
-import type { RouteId } from './lib/route'
+import { isCompanyRoute, type RouteId } from './lib/route'
 import { DronePage } from './pages/DronePage'
 import { ExamPage } from './pages/ExamPage'
 import { HubPage } from './pages/HubPage'
+import { StartPage } from './pages/StartPage'
 import { WebPage } from './pages/WebPage'
 import { IntroContext } from './providers/introContext'
 import { RouterProvider } from './providers/RouterProvider'
@@ -22,6 +23,7 @@ const PAGES: Readonly<Record<RouteId, ComponentType>> = {
   drone: DronePage,
   web: WebPage,
   exam: ExamPage,
+  start: StartPage,
 }
 
 function Site() {
@@ -29,7 +31,7 @@ function Site() {
   const Page = PAGES[route]
 
   return (
-    <div className="site" data-company={route === 'hub' ? undefined : route}>
+    <div className="site" data-company={isCompanyRoute(route) ? route : undefined}>
       <Nav />
       <main id="main" key={route}>
         <Page />

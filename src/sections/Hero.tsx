@@ -3,14 +3,13 @@ import { BrandMark } from '../components/BrandMark'
 import { CompanyMark } from '../components/CompanyMark'
 import { MagneticButton } from '../components/MagneticButton'
 import { ScrollHint } from '../components/ScrollHint'
-import { CONTACT_EMAIL, PAGE_META } from '../content'
+import { PAGE_META } from '../content'
 import { useInView } from '../hooks/useInView'
 import { usePrefersReducedMotion } from '../hooks/useMediaQuery'
 import { useRenderQuality } from '../hooks/useRenderQuality'
 import { gsap, SplitText, useGSAP } from '../lib/gsap'
-import { buildMailto } from '../lib/contact'
 import { normalisedPointer } from '../lib/pointer'
-import type { RouteId } from '../lib/route'
+import { routeHash, type HeroRouteId } from '../lib/route'
 import { useIntroComplete } from '../providers/introContext'
 import { useSmoothScroll } from '../providers/smoothScrollContext'
 import './Hero.css'
@@ -20,11 +19,11 @@ const GradientBackground = lazy(() =>
 )
 
 interface HeroProps {
-  route: RouteId
+  route: HeroRouteId
 }
 
 export function Hero({ route }: HeroProps) {
-  const { hero, gradient, mailSubject } = PAGE_META[route]
+  const { hero, gradient } = PAGE_META[route]
   const sectionRef = useRef<HTMLElement>(null)
   const logoRef = useRef<HTMLDivElement>(null)
   const introComplete = useIntroComplete()
@@ -158,7 +157,7 @@ export function Hero({ route }: HeroProps) {
               {hero.primaryCta}
               <span aria-hidden="true">↓</span>
             </MagneticButton>
-            <MagneticButton href={buildMailto(CONTACT_EMAIL, mailSubject)} variant="ghost">
+            <MagneticButton href={routeHash('start')} variant="ghost">
               {hero.secondaryCta}
             </MagneticButton>
           </div>
