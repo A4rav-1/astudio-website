@@ -100,8 +100,22 @@ export const SCROLL_HINTS = {
   drone: { start: 'Scroll to unfold the drone', active: 'Keep scrolling' },
 } as const
 
-export const INTRO_STATEMENT =
-  'A Studio is a Melbourne studio and the parent of a growing family of companies. A Drone Company builds modular folding drones. A Web Company builds websites for companies. A Exam Company trains VCE students the way the exam will test them.'
+/** A run of statement text. `brand` marks a brand name, shown with its logo and colour. */
+export interface StatementSegment {
+  text: string
+  brand: RouteId | null
+}
+
+export const INTRO_STATEMENT: readonly StatementSegment[] = [
+  { text: 'A Studio', brand: 'hub' },
+  { text: ' is a Melbourne studio and the parent of a growing family of companies. ', brand: null },
+  { text: 'A Drone Company', brand: 'drone' },
+  { text: ' builds modular folding drones. ', brand: null },
+  { text: 'A Web Company', brand: 'web' },
+  { text: ' builds websites for companies. ', brand: null },
+  { text: 'A Exam Company', brand: 'exam' },
+  { text: ' trains VCE students the way the exam will test them.', brand: null },
+]
 
 export const MARQUEE_PRIMARY: readonly string[] = [
   'A Drone Company',

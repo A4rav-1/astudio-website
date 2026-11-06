@@ -122,7 +122,7 @@ export function Hero({ route }: HeroProps) {
   }
 
   return (
-    <section ref={sectionRef} className="hero" id="top" aria-labelledby="hero-title">
+    <section ref={sectionRef} className={`hero${route === 'hub' ? ' hero--hub' : ''}`} id="top" aria-labelledby="hero-title">
       <div className="hero__backdrop" aria-hidden="true">
         {inView && (
           <Suspense fallback={null}>

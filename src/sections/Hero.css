@@ -1,4 +1,8 @@
 .hero {
+  --logo-top: clamp(72px, 10vh, 120px);
+  --logo-right: clamp(0px, 9vw, 180px);
+  --logo-width: min(54vh, 38vw, 580px);
+  --logo-aspect: 0.964; /* A Studio mark: 1330 / 1380 */
   position: relative;
   isolation: isolate;
   display: grid;
@@ -54,9 +58,9 @@
 .hero__logo-wrap {
   position: absolute;
   z-index: 1;
-  top: clamp(72px, 10vh, 120px);
-  right: clamp(0px, 9vw, 180px);
-  width: min(54vh, 38vw, 580px);
+  top: var(--logo-top);
+  right: var(--logo-right);
+  width: var(--logo-width);
   perspective: 1200px;
   pointer-events: none;
 }
@@ -168,6 +172,43 @@
   gap: 12px;
 }
 
+.hero--hub .hero__accent {
+  display: block;
+  margin-top: 0.12em;
+  font-size: 0.58em;
+}
+
+/* Hub, desktop: the buttons sit centred under the logo. The content box stops being the
+   positioning context so the aside can share the logo's geometry with .hero. */
+@media (min-width: 901px) {
+  .hero--hub .hero__content {
+    position: static;
+    grid-template-areas:
+      'eyebrow eyebrow'
+      'title title';
+  }
+
+  .hero--hub .hero__content > * {
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero--hub .hero__aside {
+    grid-area: auto; /* .hero is a grid too: a named area would place this against its rows */
+    position: absolute;
+    top: calc(var(--logo-top) + var(--logo-width) * var(--logo-aspect) + 36px);
+    right: var(--logo-right);
+    width: var(--logo-width);
+    justify-items: center;
+    padding-bottom: 0;
+  }
+
+  .hero--hub .hero__ctas {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
 @media (max-width: 900px) {
   .hero__content {
     grid-template-columns: minmax(0, 1fr);
@@ -178,11 +219,11 @@
   }
 
   .hero__logo-wrap {
-    top: clamp(68px, 9svh, 110px);
+    --logo-top: clamp(68px, 9svh, 110px);
+    --logo-width: min(72vw, 38svh);
     left: 0;
     right: 0;
     margin-inline: auto;
-    width: min(72vw, 38svh);
   }
 
   .hero__aside {

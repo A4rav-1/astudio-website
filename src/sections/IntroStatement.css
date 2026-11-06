@@ -12,3 +12,35 @@
   letter-spacing: -0.04em;
   text-wrap: pretty;
 }
+
+.intro__brand {
+  display: inline;
+  white-space: nowrap;
+  color: var(--accent, var(--text));
+  font-weight: 600;
+}
+
+.intro__brand--studio {
+  color: var(--text);
+}
+
+a.intro__brand {
+  text-decoration: underline;
+  text-decoration-color: rgba(var(--accent-rgb), 0);
+  text-decoration-thickness: 0.06em;
+  text-underline-offset: 0.12em;
+  transition: text-decoration-color 0.3s ease;
+}
+
+a.intro__brand:hover,
+a.intro__brand:focus-visible {
+  text-decoration-color: rgba(var(--accent-rgb), 0.8);
+}
+
+.intro__mark {
+  display: inline-block;
+  width: 0.9em;
+  height: 0.9em;
+  margin-right: 0.16em;
+  vertical-align: -0.1em;
+}
