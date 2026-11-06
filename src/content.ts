@@ -38,7 +38,8 @@ export interface PageHeroCopy {
   eyebrow: string
   headlineLead: string
   headlineAccent: string
-  body: string
+  /** Null where the hero logo needs the space, as on the hub. */
+  body: string | null
   primaryCta: string
   primaryHref: string
   secondaryCta: string
@@ -100,7 +101,7 @@ export const SCROLL_HINTS = {
 } as const
 
 export const INTRO_STATEMENT =
-  'A Studio is a Melbourne studio and the parent of three companies. A Drone Company builds modular folding drones. A Web Company builds websites for companies. A Exam Company trains VCE students the way the exam will test them.'
+  'A Studio is a Melbourne studio and the parent of a growing family of companies. A Drone Company builds modular folding drones. A Web Company builds websites for companies. A Exam Company trains VCE students the way the exam will test them.'
 
 export const MARQUEE_PRIMARY: readonly string[] = [
   'A Drone Company',
@@ -305,10 +306,10 @@ export const PAGE_META: Readonly<Record<RouteId, PageMeta>> = {
   hub: {
     documentTitle: 'A Studio',
     hero: {
-      eyebrow: `A Studio · ${LOCATION}`,
-      headlineLead: 'Three',
-      headlineAccent: 'companies.',
-      body: 'One studio in Melbourne: modular folding drones, websites for companies and the VCE Exam Trainer.',
+      eyebrow: LOCATION,
+      headlineLead: 'A Studio.',
+      headlineAccent: 'Ideas, built.',
+      body: null,
       primaryCta: 'Meet the companies',
       primaryHref: '#companies',
       secondaryCta: 'Start a project',

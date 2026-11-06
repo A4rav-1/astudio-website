@@ -129,6 +129,7 @@ export function Hero({ route }: HeroProps) {
             <GradientBackground pixelDensity={quality.gradientPixelDensity} colors={gradient} />
           </Suspense>
         )}
+        {route === 'hub' && <div className="hero__tint" />}
         <div className="hero__veil" />
         <div className="hero__vignette" />
         <div className="hero__shade" />
@@ -151,7 +152,7 @@ export function Hero({ route }: HeroProps) {
           {hero.headlineLead} <span className="serif-accent hero__accent">{hero.headlineAccent}</span>
         </h1>
         <div className="hero__aside">
-          <p className="hero__body hero__reveal">{hero.body}</p>
+          {hero.body !== null && <p className="hero__body hero__reveal">{hero.body}</p>}
           <div className="hero__ctas hero__reveal">
             <MagneticButton href={hero.primaryHref} onClick={onWatch}>
               {hero.primaryCta}
