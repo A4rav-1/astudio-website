@@ -128,8 +128,8 @@ export function Hero({ route }: HeroProps) {
             <GradientBackground pixelDensity={quality.gradientPixelDensity} colors={gradient} />
           </Suspense>
         )}
-        {route === 'hub' && <div className="hero__tint" />}
         <div className="hero__veil" />
+        {route === 'hub' && <div className="hero__tint" />}
         <div className="hero__vignette" />
         <div className="hero__shade" />
       </div>
