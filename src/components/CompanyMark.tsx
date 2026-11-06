@@ -1,4 +1,4 @@
-import { COMPANY_MARK_STROKE_WIDTH, COMPANY_MARKS } from '../lib/companyMarks'
+import { companyMarkSrc } from '../lib/companyMarks'
 import type { CompanyRouteId } from '../lib/route'
 
 interface CompanyMarkProps {
@@ -6,24 +6,18 @@ interface CompanyMarkProps {
   className?: string
 }
 
-/** A sub-brand logo. Sets data-company so it always draws in its own accent colour. */
+/** A sub-brand logo. Decorative: the company name is always written next to it. */
 export function CompanyMark({ company, className }: CompanyMarkProps) {
-  const { viewBox, bars } = COMPANY_MARKS[company]
   return (
-    <svg className={className} viewBox={viewBox} data-company={company} aria-hidden="true">
-      {bars.map((bar) => (
-        <path
-          key={`${bar.to[0]}-${bar.to[1]}`}
-          className="brand-mark__bar"
-          d={`M ${bar.from[0]} ${bar.from[1]} L ${bar.to[0]} ${bar.to[1]}`}
-          style={{ stroke: 'var(--accent)' }}
-          strokeWidth={COMPANY_MARK_STROKE_WIDTH}
-          strokeLinecap="round"
-          fill="none"
-          opacity={bar.opacity}
-          pathLength={1}
-        />
-      ))}
-    </svg>
+    <img
+      className={className}
+      src={companyMarkSrc(company, import.meta.env.BASE_URL)}
+      alt=""
+      width={624}
+      height={624}
+      decoding="async"
+      draggable={false}
+      data-company={company}
+    />
   )
 }

@@ -57,16 +57,22 @@ export function Hero({ route }: HeroProps) {
           }),
       })
 
-      gsap
+      const intro = gsap
         .timeline({ defaults: { ease: 'expo.out' } })
         .from('.hero__logo', { scale: 0.7, autoAlpha: 0, duration: 1.6 }, 0)
-        .fromTo(
-          '.hero__mark .brand-mark__bar',
-          { strokeDasharray: '1 1', strokeDashoffset: 1 },
-          { strokeDashoffset: 0, duration: 1.5, ease: 'expo.inOut', stagger: 0.2 },
-          0.1,
-        )
-        .from('.hero__mark .brand-mark__bar', { x: -50, y: -90, duration: 1.4, ease: 'expo.out', stagger: 0.2 }, 0.1)
+      if (route === 'hub') {
+        intro
+          .fromTo(
+            '.hero__mark .brand-mark__bar',
+            { strokeDasharray: '1 1', strokeDashoffset: 1 },
+            { strokeDashoffset: 0, duration: 1.5, ease: 'expo.inOut', stagger: 0.2 },
+            0.1,
+          )
+          .from('.hero__mark .brand-mark__bar', { x: -50, y: -90, duration: 1.4, ease: 'expo.out', stagger: 0.2 }, 0.1)
+      } else {
+        intro.from('.hero__mark--company', { x: -40, y: -70, rotate: -8, duration: 1.6 }, 0.1)
+      }
+      intro
         .from('.hero__halo', { scale: 0.3, autoAlpha: 0, duration: 2.4 }, 0)
         .from('.hero__veil', { opacity: 1, duration: 2 }, 0)
         .from('.hero__reveal', { y: 40, autoAlpha: 0, duration: 1.4, stagger: 0.08 }, 0.5)
@@ -89,7 +95,7 @@ export function Hero({ route }: HeroProps) {
 
       return () => split.revert()
     },
-    { scope: sectionRef, dependencies: [introComplete, reducedMotion] },
+    { scope: sectionRef, dependencies: [introComplete, reducedMotion, route] },
   )
 
   useGSAP(
