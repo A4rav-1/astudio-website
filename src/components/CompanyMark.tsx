@@ -13,8 +13,8 @@ export function CompanyMark({ company, className }: CompanyMarkProps) {
       className={className}
       src={companyMarkSrc(company, import.meta.env.BASE_URL)}
       alt=""
-      width={624}
-      height={624}
+      width={1000}
+      height={1000}
       decoding="async"
       draggable={false}
       data-company={company}
