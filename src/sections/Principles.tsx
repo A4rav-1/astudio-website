@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 import type { PrincipleCopy, SectionCopy } from '../content'
-import { usePrefersReducedMotion } from '../hooks/useMediaQuery'
+import { useReducedMotion } from '../hooks/useReducedMotion'
 import { gsap, useGSAP } from '../lib/gsap'
 import './Principles.css'
 
@@ -12,7 +12,7 @@ interface PrinciplesProps {
 
 export function Principles({ id, section, items }: PrinciplesProps) {
   const sectionRef = useRef<HTMLElement>(null)
-  const reducedMotion = usePrefersReducedMotion()
+  const reducedMotion = useReducedMotion()
 
   useGSAP(
     () => {

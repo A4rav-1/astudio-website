@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 import { LOCATION } from '../content'
-import { usePrefersReducedMotion } from '../hooks/useMediaQuery'
+import { useReducedMotion } from '../hooks/useReducedMotion'
 import { formatCounter } from '../lib/format'
 import { gsap, useGSAP } from '../lib/gsap'
 import { useSmoothScroll } from '../providers/smoothScrollContext'
@@ -18,7 +18,7 @@ interface LoaderProps {
 export function Loader({ onReveal, onDone }: LoaderProps) {
   const rootRef = useRef<HTMLDivElement>(null)
   const counterRef = useRef<HTMLSpanElement>(null)
-  const reducedMotion = usePrefersReducedMotion()
+  const reducedMotion = useReducedMotion()
   const scroll = useSmoothScroll()
 
   useGSAP(

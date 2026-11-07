@@ -1,12 +1,15 @@
 import { lazy, Suspense, useRef, type MouseEvent } from 'react'
 import { BrandMark } from '../components/BrandMark'
+import { CanvasBoundary } from '../components/CanvasBoundary'
 import { CompanyMark } from '../components/CompanyMark'
+import { GradientFallback } from '../components/GradientFallback'
 import { MagneticButton } from '../components/MagneticButton'
 import { ScrollHint } from '../components/ScrollHint'
 import { PAGE_META } from '../content'
 import { useInView } from '../hooks/useInView'
-import { usePrefersReducedMotion } from '../hooks/useMediaQuery'
+import { useReducedMotion } from '../hooks/useReducedMotion'
 import { useRenderQuality } from '../hooks/useRenderQuality'
+import { useWebGLSupport } from '../hooks/useWebGLSupport'
 import { gsap, SplitText, useGSAP } from '../lib/gsap'
 import { normalisedPointer } from '../lib/pointer'
 import { routeHash, type HeroRouteId } from '../lib/route'
@@ -27,8 +30,9 @@ export function Hero({ route }: HeroProps) {
   const sectionRef = useRef<HTMLElement>(null)
   const logoRef = useRef<HTMLDivElement>(null)
   const introComplete = useIntroComplete()
-  const reducedMotion = usePrefersReducedMotion()
+  const reducedMotion = useReducedMotion()
   const quality = useRenderQuality()
+  const webGL = useWebGLSupport()
   const inView = useInView(sectionRef, '160px')
   const scroll = useSmoothScroll()
 
@@ -123,10 +127,16 @@ export function Hero({ route }: HeroProps) {
   return (
     <section ref={sectionRef} className={`hero${route === 'hub' ? ' hero--hub' : ''}`} id="top" aria-labelledby="hero-title">
       <div className="hero__backdrop" aria-hidden="true">
-        {inView && (
-          <Suspense fallback={null}>
-            <GradientBackground pixelDensity={quality.gradientPixelDensity} colors={gradient} />
-          </Suspense>
+        {webGL ? (
+          inView && (
+            <CanvasBoundary label="Hero gradient" fallback={<GradientFallback colors={gradient} />}>
+              <Suspense fallback={null}>
+                <GradientBackground pixelDensity={quality.gradientPixelDensity} colors={gradient} />
+              </Suspense>
+            </CanvasBoundary>
+          )
+        ) : (
+          <GradientFallback colors={gradient} />
         )}
         <div className="hero__veil" />
         {route === 'hub' && <div className="hero__tint" />}

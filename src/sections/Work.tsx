@@ -2,13 +2,13 @@ import { useRef } from 'react'
 import { RevealHeading } from '../components/RevealHeading'
 import { SitePreview } from '../components/SitePreview'
 import { WORK, WORK_SECTION } from '../content'
-import { usePrefersReducedMotion } from '../hooks/useMediaQuery'
+import { useReducedMotion } from '../hooks/useReducedMotion'
 import { gsap, useGSAP } from '../lib/gsap'
 import './Work.css'
 
 export function Work() {
   const sectionRef = useRef<HTMLElement>(null)
-  const reducedMotion = usePrefersReducedMotion()
+  const reducedMotion = useReducedMotion()
 
   useGSAP(
     () => {

@@ -1,5 +1,5 @@
 import { useEffect, useRef, type MouseEvent, type ReactNode } from 'react'
-import { usePrefersReducedMotion } from '../hooks/useMediaQuery'
+import { useReducedMotion } from '../hooks/useReducedMotion'
 import { gsap } from '../lib/gsap'
 import { magneticOffset } from '../lib/pointer'
 import './MagneticButton.css'
@@ -16,7 +16,7 @@ interface MagneticButtonProps {
 export function MagneticButton({ href, children, variant = 'solid', strength = 0.35, onClick, cursorLabel }: MagneticButtonProps) {
   const buttonRef = useRef<HTMLAnchorElement>(null)
   const labelRef = useRef<HTMLSpanElement>(null)
-  const reducedMotion = usePrefersReducedMotion()
+  const reducedMotion = useReducedMotion()
 
   useEffect(() => {
     const button = buttonRef.current

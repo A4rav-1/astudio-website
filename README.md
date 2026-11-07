@@ -29,7 +29,8 @@ npm test         # vitest run
 ## Notes
 
 - One ScrollTrigger pin drives the drone: its progress feeds `droneStateAt`, which every frame turns into arm angles, prop speed, module docking, camera pose and callout opacity.
-- `prefers-reduced-motion`: no Lenis, no pins or scrubs, the drone renders once fully deployed, text appears with plain fades.
+- Motion: animations run by default. The OS `prefers-reduced-motion` setting only turns off Lenis smooth scrolling, because managed PCs (schools, offices) often disable Windows animation effects for everyone. The footer's "Reduce motion" switch (`providers/motionStore.ts`, saved in localStorage, mirrored as `data-motion` on `<html>`) turns off pins, scrubs and reveals; the drone then renders fully deployed and text appears with plain fades.
+- No WebGL (often blocked by policy on school PCs): `useWebGLSupport` skips the canvases and `CanvasBoundary` catches context failures. The hero falls back to a CSS gradient (`GradientFallback`) and the drone section to a hovering drone logo.
 - Mobile: lower render tier (DPR ≤ 1.5, fewer particles and segments); desktop DPR is capped at 2. WebGL canvases pause when off screen.
 - three is pinned to 0.169 because @shadergradient/react breaks on newer versions.
 

@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } fro
 import { flushSync } from 'react-dom'
 import { RouteCurtain } from '../components/RouteCurtain'
 import { siteMetaFor } from '../content'
-import { usePrefersReducedMotion } from '../hooks/useMediaQuery'
+import { useReducedMotion } from '../hooks/useReducedMotion'
 import { faviconForRoute } from '../lib/companyMarks'
 import { gsap, ScrollTrigger } from '../lib/gsap'
 import { parseRoute, routeHash, type RouteId } from '../lib/route'
@@ -16,7 +16,7 @@ const HOLD_S = 0.12
 
 export function RouterProvider({ children }: { children: ReactNode }) {
   const scroll = useSmoothScroll()
-  const reducedMotion = usePrefersReducedMotion()
+  const reducedMotion = useReducedMotion()
   const [route, setRoute] = useState<RouteId>(() => parseRoute(window.location.hash, 'hub'))
   const routeRef = useRef<RouteId>(route)
   const curtainRef = useRef<HTMLDivElement>(null)

@@ -31,6 +31,36 @@
   inset: 0;
 }
 
+.drone__fallback {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(40% 46% at 50% 46%, rgba(var(--accent-rgb, 21, 91, 191), 0.28), transparent 72%);
+}
+
+.drone__fallback-mark {
+  width: min(52vmin, 520px);
+  height: auto;
+  filter: drop-shadow(0 40px 60px rgba(0, 0, 0, 0.45));
+  animation: drone-fallback-hover 5s ease-in-out infinite;
+}
+
+@keyframes drone-fallback-hover {
+  0%,
+  100% {
+    transform: translate3d(0, -10px, 0) rotate(-2deg);
+  }
+
+  50% {
+    transform: translate3d(0, 12px, 0) rotate(2deg);
+  }
+}
+
+:root[data-motion='reduced'] .drone__fallback-mark {
+  animation: none;
+}
+
 .drone__canvas {
   position: absolute !important;
   inset: 0;
@@ -294,8 +324,6 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .callout__dot::after {
-    animation: none;
-  }
+:root[data-motion='reduced'] .callout__dot::after {
+  animation: none;
 }

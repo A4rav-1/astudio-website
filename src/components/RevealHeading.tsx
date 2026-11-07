@@ -1,5 +1,5 @@
 import { useRef, type ReactNode } from 'react'
-import { usePrefersReducedMotion } from '../hooks/useMediaQuery'
+import { useReducedMotion } from '../hooks/useReducedMotion'
 import { gsap, SplitText, useGSAP } from '../lib/gsap'
 
 interface RevealHeadingProps {
@@ -12,7 +12,7 @@ interface RevealHeadingProps {
 /** Heading whose lines rise out of a mask when scrolled into view. */
 export function RevealHeading({ children, className = 'section-title', level = 2, id }: RevealHeadingProps) {
   const headingRef = useRef<HTMLHeadingElement>(null)
-  const reducedMotion = usePrefersReducedMotion()
+  const reducedMotion = useReducedMotion()
 
   useGSAP(
     () => {

@@ -117,9 +117,7 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .magnetic--giant {
-    animation: none;
-    box-shadow: 0 30px 90px -10px rgba(var(--accent-rgb, 253, 193, 7), 0.55);
-  }
+:root[data-motion='reduced'] .magnetic--giant {
+  animation: none;
+  box-shadow: 0 30px 90px -10px rgba(var(--accent-rgb, 253, 193, 7), 0.55);
 }

@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
-import { FINE_POINTER_QUERY, useMediaQuery, usePrefersReducedMotion } from '../hooks/useMediaQuery'
+import { FINE_POINTER_QUERY, useMediaQuery } from '../hooks/useMediaQuery'
+import { useReducedMotion } from '../hooks/useReducedMotion'
 import { gsap } from '../lib/gsap'
 import './Cursor.css'
 
@@ -8,7 +9,7 @@ const ROOT_CLASS = 'has-custom-cursor'
 
 export function Cursor() {
   const hasFinePointer = useMediaQuery(FINE_POINTER_QUERY)
-  const reducedMotion = usePrefersReducedMotion()
+  const reducedMotion = useReducedMotion()
   const enabled = hasFinePointer && !reducedMotion
   const rootRef = useRef<HTMLDivElement>(null)
   const dotRef = useRef<HTMLDivElement>(null)

@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { usePrefersReducedMotion } from '../hooks/useMediaQuery'
+import { useReducedMotion } from '../hooks/useReducedMotion'
 import { gsap, useGSAP } from '../lib/gsap'
 import { proximityFalloff } from '../lib/pointer'
 import './ReactiveWordmark.css'
@@ -15,7 +15,7 @@ const RADIUS_FRACTION = 0.24
 export function ReactiveWordmark({ text }: ReactiveWordmarkProps) {
   const wrapRef = useRef<HTMLDivElement>(null)
   const spotRef = useRef<HTMLDivElement>(null)
-  const reducedMotion = usePrefersReducedMotion()
+  const reducedMotion = useReducedMotion()
 
   useGSAP(
     () => {

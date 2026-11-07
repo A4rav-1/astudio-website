@@ -1,5 +1,5 @@
 import { Fragment, useRef } from 'react'
-import { usePrefersReducedMotion } from '../hooks/useMediaQuery'
+import { useReducedMotion } from '../hooks/useReducedMotion'
 import { velocityToSkew, velocityToTimeScale } from '../lib/format'
 import { gsap, useGSAP } from '../lib/gsap'
 import { useSmoothScroll } from '../providers/smoothScrollContext'
@@ -36,7 +36,7 @@ function MarqueeGroup({ items, hidden }: { items: readonly string[]; hidden: boo
 export function Marquee({ items, variant = 'solid', reverse = false, secondsPerLoop = 38, label }: MarqueeProps) {
   const rootRef = useRef<HTMLDivElement>(null)
   const trackRef = useRef<HTMLDivElement>(null)
-  const reducedMotion = usePrefersReducedMotion()
+  const reducedMotion = useReducedMotion()
   const scroll = useSmoothScroll()
 
   useGSAP(

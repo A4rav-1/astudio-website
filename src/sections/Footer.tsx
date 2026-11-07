@@ -2,8 +2,11 @@ import { MagneticButton } from '../components/MagneticButton'
 import { ReactiveWordmark } from '../components/ReactiveWordmark'
 import { RevealHeading } from '../components/RevealHeading'
 import { COMPANIES, CONTACT_EMAIL, FOOTER, LOCATION, siteMetaFor } from '../content'
+import { useReducedMotion } from '../hooks/useReducedMotion'
 import { buildMailto } from '../lib/contact'
+import { toggledMotionSetting } from '../lib/motionSetting'
 import { routeHash } from '../lib/route'
+import { setMotionSetting } from '../providers/motionStore'
 import { useRouter } from '../providers/routerContext'
 import { useSmoothScroll } from '../providers/smoothScrollContext'
 import './Footer.css'
@@ -18,6 +21,7 @@ function splitLastWord(sentence: string): { lead: string; last: string } {
 
 export function Footer() {
   const scroll = useSmoothScroll()
+  const reducedMotion = useReducedMotion()
   const { route } = useRouter()
   const meta = siteMetaFor(route)
   const title = splitLastWord(FOOTER.title)
@@ -59,9 +63,20 @@ export function Footer() {
             </a>
           ))}
         </nav>
-        <button type="button" className="footer__top" onClick={() => scroll.scrollTo(0)}>
-          {FOOTER.backToTop} <span aria-hidden="true">↑</span>
-        </button>
+        <div className="footer__actions">
+          <button
+            type="button"
+            className="footer__motion"
+            aria-pressed={reducedMotion}
+            onClick={() => setMotionSetting(toggledMotionSetting(reducedMotion ? 'reduced' : 'full'))}
+          >
+            {FOOTER.reduceMotion}
+            <span className="footer__motion-switch" aria-hidden="true" />
+          </button>
+          <button type="button" className="footer__top" onClick={() => scroll.scrollTo(0)}>
+            {FOOTER.backToTop} <span aria-hidden="true">↑</span>
+          </button>
+        </div>
       </div>
     </footer>
   )

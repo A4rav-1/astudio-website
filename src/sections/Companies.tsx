@@ -2,7 +2,7 @@ import { useRef, type PointerEvent } from 'react'
 import { CompanyMark } from '../components/CompanyMark'
 import { RevealHeading } from '../components/RevealHeading'
 import { COMPANIES, COMPANIES_SECTION, OTHER_COMPANIES_SECTION } from '../content'
-import { usePrefersReducedMotion } from '../hooks/useMediaQuery'
+import { useReducedMotion } from '../hooks/useReducedMotion'
 import { gsap, useGSAP } from '../lib/gsap'
 import { pointerPercent } from '../lib/pointer'
 import { routeHash, type CompanyRouteId } from '../lib/route'
@@ -15,7 +15,7 @@ interface CompaniesProps {
 
 export function Companies({ excludeCompany }: CompaniesProps) {
   const sectionRef = useRef<HTMLElement>(null)
-  const reducedMotion = usePrefersReducedMotion()
+  const reducedMotion = useReducedMotion()
   const copy = excludeCompany ? OTHER_COMPANIES_SECTION : COMPANIES_SECTION
   const companies = COMPANIES.filter((company) => company.id !== excludeCompany)
 

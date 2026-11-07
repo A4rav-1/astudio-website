@@ -71,8 +71,56 @@
 }
 
 .footer__links a:hover,
-.footer__top:hover {
+.footer__top:hover,
+.footer__motion:hover {
   color: var(--text);
+}
+
+.footer__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 28px;
+}
+
+.footer__motion {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-soft);
+  transition: color 0.3s ease;
+}
+
+.footer__motion-switch {
+  position: relative;
+  width: 30px;
+  height: 18px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.06);
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.footer__motion-switch::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--text-soft);
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.footer__motion[aria-pressed='true'] .footer__motion-switch {
+  background: rgba(var(--accent-rgb, 21, 91, 191), 0.55);
+  border-color: rgba(var(--accent-rgb, 21, 91, 191), 0.9);
+}
+
+.footer__motion[aria-pressed='true'] .footer__motion-switch::after {
+  transform: translateX(12px);
+  background: var(--text);
 }
 
 @media (max-width: 767px) {

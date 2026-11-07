@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import { CompanyMark } from '../components/CompanyMark'
 import { INTRO_STATEMENT, type StatementSegment } from '../content'
-import { usePrefersReducedMotion } from '../hooks/useMediaQuery'
+import { useReducedMotion } from '../hooks/useReducedMotion'
 import { gsap, SplitText, useGSAP } from '../lib/gsap'
 import { routeHash } from '../lib/route'
 import './IntroStatement.css'
@@ -33,7 +33,7 @@ function StatementBrand({ segment }: { segment: StatementSegment }) {
 export function IntroStatement() {
   const sectionRef = useRef<HTMLElement>(null)
   const textRef = useRef<HTMLParagraphElement>(null)
-  const reducedMotion = usePrefersReducedMotion()
+  const reducedMotion = useReducedMotion()
 
   useGSAP(
     () => {

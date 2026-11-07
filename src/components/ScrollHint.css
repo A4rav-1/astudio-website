@@ -135,14 +135,10 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .scroll-hint,
-  .scroll-hint__wheel,
-  .scroll-hint__chevrons span {
-    animation: none;
-  }
+:root[data-motion='reduced'] :is(.scroll-hint, .scroll-hint__wheel, .scroll-hint__chevrons span) {
+  animation: none;
+}
 
-  .scroll-hint__chevrons span {
-    opacity: 1;
-  }
+:root[data-motion='reduced'] .scroll-hint__chevrons span {
+  opacity: 1;
 }

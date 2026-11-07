@@ -1,6 +1,7 @@
 import Lenis from 'lenis'
 import { useEffect, useMemo, useRef, type ReactNode } from 'react'
-import { usePrefersReducedMotion } from '../hooks/useMediaQuery'
+import { REDUCED_MOTION_QUERY, useMediaQuery } from '../hooks/useMediaQuery'
+import { useReducedMotion } from '../hooks/useReducedMotion'
 import { easeOutExpo } from '../lib/easing'
 import { gsap, ScrollTrigger } from '../lib/gsap'
 import { SmoothScrollContext, type ScrollListener, type ScrollSnapshot, type SmoothScrollApi } from './smoothScrollContext'
@@ -22,7 +23,10 @@ function readNativeSnapshot(previousScroll: number): ScrollSnapshot {
 }
 
 export function SmoothScrollProvider({ children }: { children: ReactNode }) {
-  const reducedMotion = usePrefersReducedMotion()
+  const reducedMotion = useReducedMotion()
+  // The OS setting keeps the animations but drops Lenis's scroll inertia, the part most likely to cause discomfort.
+  const osReducedMotion = useMediaQuery(REDUCED_MOTION_QUERY)
+  const nativeScroll = reducedMotion || osReducedMotion
   const lenisRef = useRef<Lenis | null>(null)
   const listenersRef = useRef<Set<ScrollListener>>(new Set())
 
@@ -31,7 +35,7 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
       for (const listener of listenersRef.current) listener(snapshot)
     }
 
-    if (reducedMotion) {
+    if (nativeScroll) {
       const tracker = { previousScroll: window.scrollY }
       const onScroll = () => {
         const snapshot = readNativeSnapshot(tracker.previousScroll)
@@ -64,7 +68,7 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
       lenis.destroy()
       lenisRef.current = null
     }
-  }, [reducedMotion])
+  }, [nativeScroll])
 
   const api = useMemo<SmoothScrollApi>(
     () => ({

@@ -1,10 +1,13 @@
 import { lazy, Suspense, useRef, useState } from 'react'
+import { CanvasBoundary } from '../components/CanvasBoundary'
+import { CompanyMark } from '../components/CompanyMark'
 import { RevealHeading } from '../components/RevealHeading'
 import { ScrollHint } from '../components/ScrollHint'
 import { DRONE_CALLOUTS, DRONE_SECTION, DRONE_STEPS, SCROLL_HINTS } from '../content'
 import { useInView } from '../hooks/useInView'
-import { usePrefersReducedMotion } from '../hooks/useMediaQuery'
+import { useReducedMotion } from '../hooks/useReducedMotion'
 import { useRenderQuality } from '../hooks/useRenderQuality'
+import { useWebGLSupport } from '../hooks/useWebGLSupport'
 import { stepIndexAt } from '../lib/droneTimeline'
 import { formatStepLabel } from '../lib/format'
 import { ScrollTrigger, useGSAP } from '../lib/gsap'
@@ -23,9 +26,15 @@ export function DroneSequence() {
   const calloutElements = useRef<(HTMLElement | null)[]>([])
   const [activeStep, setActiveStep] = useState(0)
   const [hintPhase, setHintPhase] = useState<ScrollHintPhase>('start')
-  const reducedMotion = usePrefersReducedMotion()
+  const reducedMotion = useReducedMotion()
   const quality = useRenderQuality()
   const stageInView = useInView(stageRef, '120px')
+  const webGL = useWebGLSupport()
+  const droneFallback = (
+    <div className="drone__fallback" aria-hidden="true">
+      <CompanyMark company="drone" className="drone__fallback-mark" />
+    </div>
+  )
 
   useGSAP(
     () => {
@@ -71,15 +80,21 @@ export function DroneSequence() {
 
       <div ref={stageRef} className="drone__stage">
         <div className="drone__viewport">
-          <Suspense fallback={null}>
-            <DroneCanvas
-              progressRef={progressRef}
-              calloutElements={calloutElements}
-              quality={quality}
-              active={stageInView}
-              staticFrame={reducedMotion}
-            />
-          </Suspense>
+          {webGL ? (
+            <CanvasBoundary label="Drone scene" fallback={droneFallback}>
+              <Suspense fallback={null}>
+                <DroneCanvas
+                  progressRef={progressRef}
+                  calloutElements={calloutElements}
+                  quality={quality}
+                  active={stageInView}
+                  staticFrame={reducedMotion}
+                />
+              </Suspense>
+            </CanvasBoundary>
+          ) : (
+            droneFallback
+          )}
           <div className="drone__callouts" aria-hidden="true">
             {DRONE_CALLOUTS.map((callout, index) => (
               <div

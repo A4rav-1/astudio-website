@@ -456,6 +456,7 @@ export const START_PAGE = {
 export const FOOTER = {
   title: 'Have something worth building?',
   backToTop: 'Back to top',
+  reduceMotion: 'Reduce motion',
   wordmark: 'A Studio',
   companiesLabel: 'Companies',
 } as const
